@@ -1,0 +1,4 @@
+#ifndef TUBESOOP_CARDS_HPP
+#define TUBESOOP_CARDS_HPP
+
+#endif
