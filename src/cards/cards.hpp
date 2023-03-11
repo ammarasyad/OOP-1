@@ -2,15 +2,13 @@
 #define TUBESOOP_CARDS_HPP
 #include <string>
 #include "hand.hpp"
-using namespace std;
 
 class Card : public virtual Hand {
 public:
     Card(int, Color);
 //  int getNumber() const;
 //  string getColor();
-    int value() override;
-    void printCard();
+    float value() const override;
     bool operator>(Card&);
     bool operator<(Card&);
     bool operator==(Card&);

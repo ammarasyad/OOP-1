@@ -4,28 +4,28 @@
 using namespace std;
 
 enum Color {
-    GREEN = 1,
-    BLUE = 2,
-    YELLOW = 3,
-    RED = 4
+    GREEN = 0,
+    BLUE = 1,
+    YELLOW = 2,
+    RED = 3
 };
 
-string colorToString(Color color) {
-    switch (color) {
-        case GREEN:
-            return "Green";
-        case BLUE:
-            return "Blue";
-        case YELLOW:
-            return "Yellow";
-        case RED:
-            return "Red";
-    }
-}
+//string colorToString(Color color) {
+//    switch (color) {
+//        case GREEN:
+//            return "Green";
+//        case BLUE:
+//            return "Blue";
+//        case YELLOW:
+//            return "Yellow";
+//        case RED:
+//            return "Red";
+//    }
+//}
 
 class Hand {
 public:
-    virtual int value() = 0;
+    virtual float value() const = 0;
 };
 
 #endif

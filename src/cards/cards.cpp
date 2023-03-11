@@ -1,11 +1,10 @@
-#include <iostream>
 #include "cards.hpp"
 #include "hand.hpp"
 
 Card::Card(int number, Color color) : number(number), color(color) {}
 
-int Card::value() {
-    return this->number;
+float Card::value() const {
+    return (float)(this->number + this->color * 0.3);
 }
 
 //int Card::getNumber() const {
@@ -15,10 +14,6 @@ int Card::value() {
 //string Card::getColor() {
 //    return colorToString(this->color);
 //}
-
-void Card::printCard() {
-    cout << "Card: " << this->number << " " << colorToString(this->color) << endl;
-}
 
 bool Card::operator<(Card& card) {
     return this->number < card.number || (this-> number == card.number && this->color < card.color);
