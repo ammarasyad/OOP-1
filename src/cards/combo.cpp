@@ -1,16 +1,12 @@
 #include "combo.hpp"
 
-#include <utility>
-
 template <typename... Cards>
-Combination::Combination(Cards... cards) {
-    for (auto card : {cards...}) {
-        this->cards.push_back(card);
-    }
+Combination::Combination(Cards... cards) : Combination(vector<Card>{cards...}) {
+
 }
 
-Combination::Combination(vector<Card> cards) {
-    copy(cards.begin(), cards.end(), back_inserter(this->cards));
+Combination::Combination(const vector<Card>& cards) : cards(cards) {
+
 }
 
 float Combination::value() const {

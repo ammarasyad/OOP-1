@@ -10,7 +10,7 @@ class Combination : public virtual Hand {
 public:
     template <typename... Cards>
     explicit Combination(Cards...);
-    explicit Combination(vector<Card>);
+    explicit Combination(const vector<Card>&);
     float value() const override;
     vector<Card> getCards() const;
     Card& operator[](int);
