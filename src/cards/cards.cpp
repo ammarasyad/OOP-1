@@ -1,10 +1,16 @@
 #include <iostream>
 #include "headers/cards.hpp"
 #include "headers/hand.hpp"
+#include "generalexceptions.hpp"
 
 /** Player Card **/
 
-PlayerCard::PlayerCard(int number, Color color) : number(number), color(color) {}
+PlayerCard::PlayerCard(int number, Color color) : color(color) {
+    if (this->number < 1 || this->number > 13) {
+        throw GameStateException("Kartu harus memiliki nomor di antara 1-13");
+    }
+    this->number = number;
+}
 
 PlayerCard::PlayerCard(const PlayerCard &other) : PlayerCard(other.number, other.color) {}
 

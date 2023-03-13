@@ -6,10 +6,10 @@
 
 class GameStateException: public std::exception {
 private:
-    char* message;
+    const char* message;
 public:
-    explicit GameStateException(char* message): message(message) {}
-    const char* what() const noexcept {
+    explicit GameStateException(const std::string& message): message(message.c_str()) {}
+    const char* what() const noexcept override {
         return message;
     }
 };
