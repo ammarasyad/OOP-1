@@ -2,82 +2,113 @@
 #include "generalexceptions.hpp"
 #include <bits/stdc++.h>
 
-GameState::GameState(std::vector<Player> player_list): player_list(player_list), point(0), round(0) {
-
+GameState::GameState(std::vector<Player>& player_list)
+        : playerList(player_list), gamePoint(0), round(0) {
 }
 
-long long int GameState::get_point() const {
-    return point;
+long long int GameState::getPoint() const {
+    return gamePoint;
 }
 
-Player& GameState::get_player(int player_id) {
+int GameState::getRound() const {
+    return round;
+}
+
+Player& GameState::getPlayer(int player_id) {
     if (player_id > 7 || player_id <= 0) {
-        throw GameStateException("player id does not exist");
+        throw GameStateException((char*)"player id does not exist");
     }
-    return player_list.at(player_id);
+    return playerList.at(player_id);
 }
 
-Player &GameState::get_current_player() {
-    return **current_start;
+Player &GameState::getCurrentPlayer() {
+    return **currentStart;
 }
 
-
-std::vector<Player*>& GameState::get_queue() {
+std::vector<Player*>& GameState::getQueue() {
     if (round == 0) {
-        throw GameStateException("invalid operation on round-0");
+        throw GameStateException((char*)"invalid operation on round-0");
     }
     return queue;
 }
 
-Player& GameState::next_player() {
-    // check if all players already in the next round's queue
-    if (current_start == current_end) {
-        throw GameStateException("last player had taken the turn");
+void GameState::reverseQueue() {
+    std::reverse(currentStart, currentEnd);
+    --currentEnd;
+}
+
+Player& GameState::nextTurn(char reverse) {
+    if (currentStart == currentEnd) {
+        throw GameStateException((char*)"last player had taken the turn");
     }
-    // deref iterator then deref pointer
-    return **(current_start++);
+    if (round >= 7) {
+        throw GameStateException((char*)"Exceeded round limit");
+    }
+
+    if (reverse == 'y' || reverse == 'Y') {
+        reverseQueue();
+        return **(currentStart);
+    }
+    Player *next_player = *(currentStart + 1);
+    if ((**currentStart).getPlayerId() == firstTurnId) {
+        Player *temp = *currentStart;
+        queue.erase(currentStart);
+        queue.push_back(temp);
+        next_player = *currentStart;
+
+    }
+    // round ended
+    if (currentStart == currentEnd) {
+        endRound();
+    }
+
+    return *next_player;
 }
 
-void GameState::multiply_point(int multiplier) {
-    point *= multiplier;
+void GameState::multiplyPoint(int multiplier) {
+    gamePoint *= multiplier;
 }
 
-void GameState::reverse_queue() {
-    std::reverse(current_start, current_end);
-    --current_end;
-}
-
-void GameState::end_round() {
+void GameState::endRound() {
     round += 1;
-    current_start = queue.begin();
-    current_end = queue.end();
+    currentStart = queue.begin();
+    currentEnd = queue.end();
+    firstTurnId = (**currentStart).getPlayerId();
 }
 
-void GameState::start_game() {
+void GameState::startGame() {
     if (round != 0) {
-        throw GameStateException("Game already started");
+        throw GameStateException((char*)"Game already started");
     }
-    point = 64;
-    for (auto it = player_list.begin(); it != player_list.end(); ++it) {
-        queue.push_back(&(*it));
+    gamePoint = 64;
+    if (queue.empty()) {
+        for (auto & it : playerList) {
+            queue.push_back(&it);
+        }
     }
-    current_start = queue.begin();
-    current_end = queue.end();
+    firstTurnId = (*queue.front()).getPlayerId();
+    currentStart = queue.begin();
+    currentEnd = queue.end();
     round = 1;
 }
 
-void GameState::restart_game() {
-    queue.clear();
-    point = 0;
-    round = 0;
+void GameState::restartGame() {
+    gamePoint = 0;
+    round = 1;
+    for (auto &it: playerList) {
+        // reset all players' inventory
+    }
 }
 
 void GameState::print() {
-    auto temp = current_start;
-    while (temp != current_end) {
-        std::cout << (*temp)->num << " ";
+    auto temp = currentStart;
+    std::cout << "round " << round << ": ";
+    while (temp != currentEnd) {
+        std::cout << (*temp)->getPlayerId() << " ";
         ++temp;
     }
     std::cout << std::endl;
 
 }
+
+
