@@ -3,34 +3,61 @@
 #include <string>
 #include "hand.hpp"
 
-class Card : public virtual Hand {
+enum Ability {
+    REROLL,
+    QUADRUPLE,
+    QUARTER,
+    REVERSE_DIRECTION,
+    SWAP,
+    SWITCH,
+    ABILITYLESS
+};
+
+map<Ability, string> abilityString = {
+        {REROLL, "Reroll"},
+        {QUADRUPLE, "Quadruple"},
+        {QUARTER, "Quarter"},
+        {REVERSE_DIRECTION, "Reverse Direction"},
+        {SWAP, "Swap"},
+        {SWITCH, "Switch"},
+        {ABILITYLESS, "Abilityless"}
+};
+
+class Card : protected Hand {
 public:
-    explicit Card(int, Color);
-    Card(const Card& other);
+    virtual void print() = 0;
+};
+
+class PlayerCard : Card {
+private:
+    int number;
+    Color color;
+public:
+    PlayerCard(int, Color);
+    PlayerCard(const PlayerCard&);
     int getNumber() const;
     Color getColor();
     string getColorString();
     float getValue() override;
-    bool operator>(const Card&) const;
-    bool operator<(const Card&) const;
-    bool operator==(const Card&) const;
-    bool operator!=(const Card&) const;
-    bool operator>=(const Card&) const;
-    bool operator<=(const Card&) const;
-protected:
-    int number;
-    Color color;
+    void print() override;
+    bool operator>(const PlayerCard&) const;
+    bool operator<(const PlayerCard&) const;
+    bool operator==(const PlayerCard&) const;
+    bool operator!=(const PlayerCard&) const;
+    bool operator>=(const PlayerCard&) const;
+    bool operator<=(const PlayerCard&) const;
 };
 
-// TODO: Implementasi class PlayerCard dan AbilityCard
-class PlayerCard : public Card {
-    public:
-        PlayerCard(int, Color);
-};
-
-class AbilityCard : public Card {
-    public:
-        AbilityCard(int, Color);
+class AbilityCard : Card {
+private:
+    Ability ability;
+public:
+    explicit AbilityCard(Ability);
+    AbilityCard(const AbilityCard&);
+    virtual ~AbilityCard();
+    Ability getAbility();
+    void print() override;
+    void consume();
 };
 
 #endif

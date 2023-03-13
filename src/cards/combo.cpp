@@ -1,23 +1,24 @@
 #include <algorithm>
 #include "headers/combo.hpp"
 
-template<typename... Cards>
-Combination::Combination(Cards... cards) : Combination(vector<Card>{cards...}) {
+template<typename... PlayerCards>
+Combination::Combination(PlayerCards... cards) : Combination(vector<PlayerCard>{cards...}) {
 
 }
 
-Combination::Combination(vector<Card> &cards) {
-    sort(cards.begin(), cards.end(), [](const Card &card1, const Card &card2) {
+Combination::Combination(vector<PlayerCard> &cards) {
+    sort(cards.begin(), cards.end(), [](const PlayerCard &card1, const PlayerCard &card2) {
         return card1 > card2;
     });
     this->cards = cards;
+    this->type = calculateType();
 }
 
 float Combination::getValue() {
 
 }
 
-vector<Card> Combination::getCards() const {
+vector<PlayerCard> Combination::getCards() const {
     return this->cards;
 }
 
@@ -25,15 +26,50 @@ CombinationType Combination::getType() const {
     return this->type;
 }
 
-Card &Combination::operator[](int index) {
+PlayerCard &Combination::operator[](int index) {
     return this->cards[index];
 }
 
-float Combination::getHighestCardValue() const {
-    float highestValue = 0;
-    for (Card card: this->cards) {
-        if (card.getValue() > highestValue) {
-            highestValue = card.getValue();
+CombinationType Combination::calculateType() {
+    CombinationType result = HIGH_PAIR;
+    // Look at this mess
+    for (int i = 0; i < this->cards.size() - 1; i++) {
+        if (this->cards[i] == this->cards[i + 1]) {
+            result = PAIR;
+        } else if (i < this->cards.size() - 3 && this->cards[i] == this->cards[i + 1] &&
+                   this->cards[i + 2] == this->cards[i + 3]) {
+            result = TWO_PAIR;
+        } else if (i < this->cards.size() - 4 && this->cards[i] == this->cards[i + 1] &&
+                   this->cards[i + 2] == this->cards[i + 3]) {
+            result = THREE_OF_A_KIND;
+        } else if (i < this->cards.size() - 4 && this->cards[i].getNumber() == this->cards[i + 1].getNumber() + 1 &&
+                   this->cards[i + 2].getNumber() == this->cards[i + 3].getNumber() + 1) {
+            result = STRAIGHT;
+        } else if (i < this->cards.size() - 4 && this->cards[i].getColor() == this->cards[i + 1].getColor() &&
+                   this->cards[i + 2].getColor() == this->cards[i + 3].getColor() &&
+                   this->cards[i + 4].getColor() == this->cards[i + 5].getColor()) {
+            result = FLUSH;
+        } else if (i < this->cards.size() - 4 && this->cards[i] == this->cards[i + 1] &&
+                   this->cards[i + 2] == this->cards[i + 3] && this->cards[i + 4] == this->cards[i + 5]) {
+            result = FULL_HOUSE;
+        } else if (i < this->cards.size() - 4 && this->cards[i] == this->cards[i + 1] &&
+                   this->cards[i + 2] == this->cards[i + 3] && this->cards[i + 4] == this->cards[i + 5]) {
+            result = FOUR_OF_A_KIND;
+        } else if (i < this->cards.size() - 4 && this->cards[i].getNumber() == this->cards[i + 1].getNumber() + 1 &&
+                   this->cards[i + 2].getNumber() == this->cards[i + 3].getNumber() + 1 &&
+                   this->cards[i].getColor() == this->cards[i + 1].getColor() &&
+                   this->cards[i + 2].getColor() == this->cards[i + 3].getColor()) {
+            result = STRAIGHT_FLUSH;
+        }
+    }
+    return result;
+}
+
+PlayerCard Combination::getHighestCard() {
+    PlayerCard highestValue = this->cards[0];
+    for (const auto &card: this->cards) {
+        if (card > highestValue) {
+            highestValue = card;
         }
     }
     return highestValue;
@@ -43,7 +79,7 @@ float Combination::getHighestCardValue() const {
 float Combination::getComboTypeValue() {
     switch (this->type) {
         case HIGH_PAIR:
-            return getHighestCardValue();
+            return getHighestCard().getValue();
         case PAIR: {
             this->type = PAIR;
             float pairValue = 0;
@@ -140,6 +176,10 @@ float Combination::getComboTypeValue() {
                 }
             }
             return straightFlushValue + (8 * 13.9f) + ((float) this->cards[0].getColor() * 0.3f);
+        }
+        default: {
+            this->type = calculateType();
+            return getComboTypeValue();
         }
     }
 }

@@ -1,50 +1,90 @@
+#include <iostream>
 #include "headers/cards.hpp"
 #include "headers/hand.hpp"
 
-Card::Card(int number, Color color) : number(number), color(color) {}
+/** Player Card **/
 
-Card::Card(const Card &other) : Card(other.number, other.color) {}
+PlayerCard::PlayerCard(int number, Color color) : number(number), color(color) {}
 
-float Card::getValue() {
-    return (float) (this->number + this->color * 0.3);
-}
+PlayerCard::PlayerCard(const PlayerCard &other) : PlayerCard(other.number, other.color) {}
 
-int Card::getNumber() const {
+int PlayerCard::getNumber() const {
     return this->number;
 }
 
-Color Card::getColor() {
+Color PlayerCard::getColor() {
     return this->color;
 }
 
-string Card::getColorString() {
-    return colorToString(this->color);
+string PlayerCard::getColorString() {
+    return colorString[this->color];
 }
 
-bool Card::operator<(const Card &card) const {
-    return this->number < card.number || (this->number == card.number && this->color < card.color);
+float PlayerCard::getValue() {
+    return (float) (this->number + this->color * 0.3);
 }
 
-bool Card::operator>(const Card &card) const {
-    return this->number > card.number || (this->number == card.number && this->color > card.color);
+void PlayerCard::print() {
+    cout << this->number << " " << this->getColorString() << endl;
 }
 
-bool Card::operator==(const Card &card) const {
-    return this->number == card.number && this->color == card.color;
+bool PlayerCard::operator<(const PlayerCard &other) const {
+    return this->number < other.number || (this->number == other.number && this->color < other.color);
 }
 
-bool Card::operator!=(const Card &card) const {
-    return !(*this == card);
+bool PlayerCard::operator>(const PlayerCard &other) const {
+    return this->number > other.number || (this->number == other.number && this->color > other.color);
 }
 
-bool Card::operator>=(const Card &card) const {
-    return *this > card || *this == card;
+bool PlayerCard::operator==(const PlayerCard &other) const {
+    return this->number == other.number && this->color == other.color;
 }
 
-bool Card::operator<=(const Card &card) const {
-    return *this < card || *this == card;
+bool PlayerCard::operator!=(const PlayerCard &other) const {
+    return !(*this == other);
 }
 
-PlayerCard::PlayerCard(int number, Color color) : Card(number, color) {}
+bool PlayerCard::operator>=(const PlayerCard &other) const {
+    return *this > other || *this == other;
+}
 
-AbilityCard::AbilityCard(int number, Color color) : Card(number, color) {}
+bool PlayerCard::operator<=(const PlayerCard &other) const {
+    return *this < other || *this == other;
+}
+
+/** Ability Card **/
+
+AbilityCard::AbilityCard(Ability ability) : ability(ability) {}
+
+AbilityCard::AbilityCard(const AbilityCard &other) : AbilityCard(other.ability) {}
+
+AbilityCard::~AbilityCard() = default;
+
+Ability AbilityCard::getAbility() {
+    return this->ability;
+}
+
+void AbilityCard::print() {
+    cout << abilityString[this->ability] << endl;
+}
+
+// TODO: Implement effects
+void AbilityCard::consume() {
+    switch (this->ability) {
+        case REROLL:
+            break;
+        case QUADRUPLE:
+            break;
+        case QUARTER:
+            break;
+        case REVERSE_DIRECTION:
+            break;
+        case SWAP:
+            break;
+        case SWITCH:
+            break;
+        case ABILITYLESS:
+            break;
+    }
+    delete this;
+}

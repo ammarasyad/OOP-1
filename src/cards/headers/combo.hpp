@@ -17,15 +17,15 @@ enum CombinationType {
     STRAIGHT_FLUSH = 8,
 };
 
-class Combination : public virtual Hand {
+class Combination : public Hand {
 public:
-    template <typename... Cards>
-    explicit Combination(Cards...);
-    explicit Combination(vector<Card>&);
+    template <typename... PlayerCards>
+    explicit Combination(PlayerCards...);
+    explicit Combination(vector<PlayerCard>&);
     float getValue() override;
-    vector<Card> getCards() const;
+    vector<PlayerCard> getCards() const;
     CombinationType getType() const;
-    Card& operator[](int);
+    PlayerCard& operator[](int);
 //    bool operator>(Combination&);
 //    bool operator<(Combination&);
 //    bool operator==(Combination&);
@@ -33,10 +33,11 @@ public:
 //    bool operator>=(Combination&);
 //    bool operator<=(Combination&);
 private:
-    vector<Card> cards;
-    CombinationType type = HIGH_PAIR;
+    vector<PlayerCard> cards;
+    CombinationType type;
 
-    float getHighestCardValue() const;
+    CombinationType calculateType();
+    PlayerCard getHighestCard();
     float getComboTypeValue();
 };
 
