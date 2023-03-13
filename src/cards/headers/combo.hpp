@@ -5,14 +5,26 @@
 #include "hand.hpp"
 #include "cards.hpp"
 
+enum CombinationType {
+    HIGH_PAIR = 0,
+    PAIR = 1,
+    TWO_PAIR = 2,
+    THREE_OF_A_KIND = 3,
+    STRAIGHT = 4,
+    FLUSH = 5,
+    FULL_HOUSE = 6,
+    FOUR_OF_A_KIND = 7,
+    STRAIGHT_FLUSH = 8,
+};
 
 class Combination : public virtual Hand {
 public:
     template <typename... Cards>
     explicit Combination(Cards...);
-    explicit Combination(const vector<Card>&);
-    float value() const override;
+    explicit Combination(vector<Card>&);
+    float getValue() override;
     vector<Card> getCards() const;
+    CombinationType getType() const;
     Card& operator[](int);
 //    bool operator>(Combination&);
 //    bool operator<(Combination&);
@@ -22,6 +34,10 @@ public:
 //    bool operator<=(Combination&);
 private:
     vector<Card> cards;
+    CombinationType type = HIGH_PAIR;
+
+    float getHighestCardValue() const;
+    float getComboTypeValue();
 };
 
 #endif
