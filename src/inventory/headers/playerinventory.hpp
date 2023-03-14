@@ -4,15 +4,19 @@
 #include "limitedinventory.hpp"
 #include "cards.hpp"
 
-class PlayerInventory: LimitedInventory {
+class PlayerInventory: LimitedInventory<PlayerCard> {
 private:
     AbilityCard *abilityCard;
     bool abilityAvailable;
 public:
     PlayerInventory();
+
     bool isAbilityAvailable() const;
+    bool isAbilityMatch(AbilityCard &card);
+    bool checkAbilityMatchAndUse(AbilityCard &card);
     void setAbilityCard(AbilityCard&);
     void setAbilityUsed();
+
     void resetPlayer();
 
 };

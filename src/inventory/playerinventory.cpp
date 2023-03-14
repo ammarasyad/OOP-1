@@ -1,7 +1,3 @@
-//
-// Created by zidane on 3/14/23.
-//
-
 #include "playerinventory.hpp"
 
 void PlayerInventory::setAbilityUsed() {

@@ -1,31 +1,39 @@
 #include "limitedinventory.hpp"
 #include "generalexceptions.hpp"
 
-LimitedInventory::LimitedInventory(): limit(100) {
+template <class T>
+LimitedInventory<T>::LimitedInventory(): limit(100) {
 }
 
-LimitedInventory::LimitedInventory(int limit): limit(limit) {
+template <class T>
+LimitedInventory<T>::LimitedInventory(int limit): limit(limit) {
     if (limit <= 0)
         throw InventoryException("invalid inventory limit");
 
     if (limit < 30) {
-        deck.reserve(limit);
+        this->deck.reserve(limit);
     } else {
-        deck.reserve(30 + 0.2*limit);
+        this->deck.reserve(30 + 0.2*limit);
     }
 }
 
-void LimitedInventory::addToDeck(PlayerCard &card) {
-    deck.push_back(card);
-    deckSize += 1;
+template <class T>
+void LimitedInventory<T>::addToDeck(T &card) {
+    if (this->deckSize >= limit) {
+        throw InventoryException("inventory limit exceeded");
+    }
+    this->deck.push_back(card);
+    this->deckSize += 1;
 }
 
-std::vector<PlayerCard> &LimitedInventory::operator+(PlayerCard &card) {
+template <class T>
+std::vector<T> &LimitedInventory<T>::operator+(T &card) {
     addToDeck(card);
-    return deck;
+    return this->deck;
 }
 
-vector<PlayerCard> &operator+(PlayerCard &card, LimitedInventory& inventory) {
+template <class T>
+vector<T> &operator+(T &card, LimitedInventory<T> &inventory) {
     inventory.addToDeck(card);
     return inventory.deck;
 }
