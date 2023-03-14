@@ -2,39 +2,33 @@
 #define IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_PLAYER_HPP
 
 #include "inventoryHolder.hpp"
-#include "cards.hpp"
-#include <iostream>
 
-//temp
-class Deck {
-    public:
-        void show();
-};
 
 // TODO: dummy class, please change later
-class Player : InventoryHolder {
+class Player : public InventoryHolder<Card> {
     private:
         static int PLAYER_AMOUNT;
         const int playerId_;
         int point_;
-        Deck hand_;
+        
         
     public:
         Player();
-        Player(Deck deck);
+        Player(PlayerInventory deck);
 
-        void showInventory() override;
-        int getPoint();
-        void setPoint(int point);
-        void addPoint(int amount);
+        virtual Inventory<Card> getInventory();
+        virtual void setInventory(Inventory<Card>);
 
-        Deck getHand();
-        void setHand(Deck hand);
-
-        void addCard(Card card);
-        void removeCard(Card card);
+        virtual void addItem(Card);
+        virtual void removeIten(Card);
         
-        Card getCardAt(int index);
+        virtual Card getItemAt(int);
+
+        int getId();
+
+        int getPoint();
+        void setPoint(int);
+        void addPoint(int);
 
 };
 
