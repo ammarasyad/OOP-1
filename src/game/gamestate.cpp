@@ -4,6 +4,11 @@
 
 GameState::GameState(std::vector<Player>& player_list)
         : playerList(player_list), gamePoint(0), round(0) {
+    if (creationCount > 0) {
+        cout << "WARNING: This is not the first request of GameState creation. Please revisit the code if"
+            << " this code is not for testing" << endl;
+    }
+    creationCount += 1;
 }
 
 long long int GameState::getPoint() const {

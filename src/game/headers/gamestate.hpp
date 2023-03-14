@@ -8,7 +8,10 @@
 class GameState {
     /*
      * this class have methods that could break the game, such as reversing queue, multiply points, etc.
-     * therefore, GameState object must be called only from the classes implementing the players' constraint
+     * therefore, GameState object must be called only from the classes implementing the players' constraint.
+     *
+     * this class MUST be a singleton, since we're not creating a factory we'd only warn when GameState is
+     * created more than once.
      * */
     private:
         std::vector<Player*> queue;
@@ -23,6 +26,8 @@ class GameState {
 
         inline void reverseQueue();
         void endRound();
+
+        static int creationCount;
 
     public:
         GameState(std::vector<Player>&);
