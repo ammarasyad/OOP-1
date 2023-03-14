@@ -26,4 +26,14 @@ public:
 };
 
 
+class PlayerException: public std::exception {
+private:
+    const std::string message;
+public:
+    explicit PlayerException(std::string message): message(std::move(message)) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
 #endif //IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_GENERALEXCEPTIONS_HPP
