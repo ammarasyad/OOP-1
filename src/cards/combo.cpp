@@ -6,7 +6,7 @@ Combination::Combination(PlayerCards... cards) : Combination(vector<PlayerCard>{
 
 }
 
-Combination::Combination(vector<PlayerCard> &cards) {
+Combination::Combination(vector<PlayerCard>& cards) {
     sort(cards.begin(), cards.end(), [](const PlayerCard &card1, const PlayerCard &card2) {
         return card1 > card2;
     });

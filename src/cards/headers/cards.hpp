@@ -2,7 +2,7 @@
 #define TUBESOOP_CARDS_HPP
 #include <string>
 #include "hand.hpp"
-#include "ability.hpp" // Dummy header
+#include "../ability/headers/ability.hpp"
 
 class Card : protected Hand {
 public:
@@ -37,15 +37,14 @@ public:
     friend ostream& operator<<(ostream&, PlayerCard);
 };
 
-template <class T>
 class AbilityCard : Card {
 private:
-    Ability<T> ability;
+    Ability& ability;
+    int abilityCardId;
 public:
-    explicit AbilityCard(Ability<T>);
-    AbilityCard(const AbilityCard&);
-    virtual ~AbilityCard();
-    Ability<T> getAbility();
+    explicit AbilityCard(Ability&);
+    Ability& getAbility();
+    int getId() const;
     void print() override;
     void consume();
 };

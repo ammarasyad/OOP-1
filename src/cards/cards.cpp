@@ -65,26 +65,22 @@ ostream& operator<<(ostream& os, PlayerCard card) {
 }
 
 /** Ability Card **/
-template <class T>
-AbilityCard<T>::AbilityCard(Ability<T> ability) : ability(ability) {}
+AbilityCard::AbilityCard(Ability& ability) : ability(ability) {
+    this->abilityCardId = ability.getId();
+}
 
-template <class T>
-AbilityCard<T>::AbilityCard(const AbilityCard<T> &other) : AbilityCard(other.ability) {}
-
-template <class T>
-AbilityCard<T>::~AbilityCard() = default;
-
-template <class T>
-Ability<T> AbilityCard<T>::getAbility() {
+Ability& AbilityCard::getAbility() {
     return this->ability;
 }
-template <class T>
-void AbilityCard<T>::print() {
-    cout << this->ability.toString() << endl;
+
+int AbilityCard::getId() const {
+    return this->abilityCardId;
 }
 
-// TODO: Implement effects
-template <class T>
-void AbilityCard<T>::consume() {
+void AbilityCard::print() {
+
+}
+
+void AbilityCard::consume() {
     this->ability.consume();
 }

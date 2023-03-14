@@ -1,6 +1,18 @@
-#include "ability.hpp"
+#include "headers/ability.hpp"
+#include "gamestate.hpp"
+#include "player.hpp"
 #include <iostream>
 using namespace std;
+
+Ability::Ability(GameState &state) : state(state) {}
+
+int Ability::getId() const {
+    return this->abilityCardId;
+}
+
+ReRoll::ReRoll(GameState& state) : Ability(state) {
+    this->abilityCardId = REROLL;
+}
 
 void ReRoll::consume() {
     if (checkAbilityCard()) {
@@ -16,12 +28,20 @@ void ReRoll::consume() {
     }
 }
 
+Double::Double(GameState& state) : Ability(state) {
+    this->abilityCardId = DOUBLE;
+}
+
 void Double::consume() {
     long long int before = getPoint();
     long long int after = before * 2;
     multiplyPoint(2);
 
     cout << "melakukan DOUBLE! Poin hadiah naik dari " << before << " menjadi " << after << "!" << endl;
+}
+
+Quadruple::Quadruple(GameState& state) : Ability(state) {
+    this->abilityCardId = QUADRUPLE;
 }
 
 void Quadruple::consume() {
@@ -37,6 +57,10 @@ void Quadruple::consume() {
     } 
 }
 
+Half::Half(GameState& state) : Ability(state) {
+    this->abilityCardId = HALF;
+}
+
 void Half::consume() {
     long long int before = getPoint();
 
@@ -49,7 +73,10 @@ void Half::consume() {
     else {
         cout << "melakukan HALF! Sayangnya poin hadiah sudah bernilai 1. Poin hadiah tidak berubah.. Giliran dilanjut!" << endl;
     }
-    
+}
+
+Quarter::Quarter(GameState& state) : Ability(state) {
+    this->abilityCardId = QUARTER;
 }
 
 void Quarter::consume() {
@@ -66,6 +93,10 @@ void Quarter::consume() {
     }
 }
 
+Reverse::Reverse(GameState& state) : Ability(state) {
+    this->abilityCardId = REVERSE;
+}
+
 void Reverse::consume() {
     if (CantUseAbility) {
         cout << "Oops, kartu ability reversemu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << endl;
@@ -78,6 +109,10 @@ void Reverse::consume() {
             cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability REVERSE." << endl;
         } 
     }
+}
+
+SwapCard::SwapCard(GameState& state) : Ability(state) {
+    this->abilityCardId = SWAPCARD;
 }
 
 void SwapCard::consume() {
@@ -95,6 +130,10 @@ void SwapCard::consume() {
     }
 }
 
+Switch::Switch(GameState& state) : Ability(state) {
+    this->abilityCardId = SWITCH;
+}
+
 void Switch::consume() {
     if (CantUseAbility) {
         cout << "Oops, kartu ability switchmu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << endl;
@@ -108,6 +147,10 @@ void Switch::consume() {
             cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability SWITCH." << endl;
         } 
     }
+}
+
+Abilityless::Abilityless(GameState& state) : Ability(state) {
+    this->abilityCardId = ABILITYLESS;
 }
 
 void Abilityless::consume() {}
