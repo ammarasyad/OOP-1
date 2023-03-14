@@ -14,7 +14,7 @@ int GameState::getRound() const {
     return round;
 }
 
-Player& GameState::getPlayer(int player_id) {
+Player& GameState::getPlayerById(int player_id) {
     if (player_id > 7 || player_id <= 0) {
         throw GameStateException((char*)"player id does not exist");
     }
@@ -66,10 +66,14 @@ Player& GameState::nextTurn(char reverse) {
 }
 
 void GameState::multiplyPoint(int multiplier) {
+    if (gamePoint == 1)
+        return;
     gamePoint *= multiplier;
 }
 
 void GameState::dividePoint(int divider) {
+    if (gamePoint == 1)
+        return;
     gamePoint /= divider;
 }
 
