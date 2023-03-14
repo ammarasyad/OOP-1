@@ -69,6 +69,10 @@ void GameState::multiplyPoint(int multiplier) {
     gamePoint *= multiplier;
 }
 
+void GameState::dividePoint(int divider) {
+    gamePoint /= divider;
+}
+
 void GameState::endRound() {
     round += 1;
     currentStart = queue.begin();

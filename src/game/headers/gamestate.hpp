@@ -26,6 +26,7 @@ class GameState {
         std::vector<Player*>& getQueue();
         Player& nextTurn(char);
         void multiplyPoint(int);
+        void dividePoint(int);
         void startGame();
         void restartGame();
         void print();
