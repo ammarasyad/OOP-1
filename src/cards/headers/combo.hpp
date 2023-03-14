@@ -25,20 +25,41 @@ public:
     float getValue() override;
     vector<PlayerCard> getCards() const;
     CombinationType getType() const;
+    string getTypeString();
     PlayerCard& operator[](int);
-//    bool operator>(Combination&);
-//    bool operator<(Combination&);
-//    bool operator==(Combination&);
-//    bool operator!=(Combination&);
-//    bool operator>=(Combination&);
-//    bool operator<=(Combination&);
+    bool operator>(Combination&);
+    bool operator<(Combination&);
+    bool operator==(Combination&);
+    bool operator!=(Combination&);
+    bool operator>=(Combination&);
+    bool operator<=(Combination&);
 private:
     vector<PlayerCard> cards;
     CombinationType type;
 
     CombinationType calculateType();
-    PlayerCard getHighestCard();
-    float getComboTypeValue();
+//    PlayerCard getHighestCard();
+
+    bool isStraightFlush();
+    bool isFourOfAKind();
+    bool isFullHouse();
+    bool isFlush();
+    bool isStraight();
+    bool isThreeOfAKind();
+    bool isTwoPair();
+    bool isPair();
+
+    map<CombinationType, string> comboString = {
+        {HIGH_PAIR, "High Pair"},
+        {PAIR, "Pair"},
+        {TWO_PAIR, "Two Pair"},
+        {THREE_OF_A_KIND, "Three of a Kind"},
+        {STRAIGHT, "Straight"},
+        {FLUSH, "Flush"},
+        {FULL_HOUSE, "Full House"},
+        {FOUR_OF_A_KIND, "Four of a Kind"},
+        {STRAIGHT_FLUSH, "Straight Flush"}
+    };
 };
 
 #endif

@@ -3,24 +3,25 @@
 
 #include <exception>
 #include <string>
+#include <utility>
 
 class GameStateException: public std::exception {
 private:
-    const char* message;
+    const std::string message;
 public:
-    explicit GameStateException(const std::string& message): message(message.c_str()) {}
+    explicit GameStateException(std::string message): message(std::move(message)) {}
     const char* what() const noexcept override {
-        return message;
+        return message.c_str();
     }
 };
 
 class InventoryException: public std::exception {
 private:
-    const char* message;
+    const std::string message;
 public:
-    explicit InventoryException(const std::string& message): message(message.c_str()) {}
+    explicit InventoryException(std::string message): message(std::move(message)) {}
     const char* what() const noexcept override {
-        return message;
+        return message.c_str();
     }
 };
 

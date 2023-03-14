@@ -6,7 +6,7 @@
 /** Player Card **/
 
 PlayerCard::PlayerCard(int number, Color color) : color(color) {
-    if (this->number < 1 || this->number > 13) {
+    if (number < 1 || number > 13) {
         throw GameStateException("Kartu harus memiliki nomor di antara 1-13");
     }
     this->number = number;
@@ -58,39 +58,33 @@ bool PlayerCard::operator<=(const PlayerCard &other) const {
     return *this < other || *this == other;
 }
 
-/** Ability Card **/
-
-AbilityCard::AbilityCard(Ability ability) : ability(ability) {}
-
-AbilityCard::AbilityCard(const AbilityCard &other) : AbilityCard(other.ability) {}
-
-AbilityCard::~AbilityCard() = default;
-
-Ability AbilityCard::getAbility() {
-    return this->ability;
+// A bit redundant, but it's okay I guess
+ostream& operator<<(ostream& os, PlayerCard card) {
+    os << card.getNumber() << " " << card.getColorString();
+    return os;
 }
 
-void AbilityCard::print() {
-    cout << abilityString[this->ability] << endl;
+/** Ability Card **/
+template <class T>
+AbilityCard<T>::AbilityCard(Ability<T> ability) : ability(ability) {}
+
+template <class T>
+AbilityCard<T>::AbilityCard(const AbilityCard<T> &other) : AbilityCard(other.ability) {}
+
+template <class T>
+AbilityCard<T>::~AbilityCard() = default;
+
+template <class T>
+Ability<T> AbilityCard<T>::getAbility() {
+    return this->ability;
+}
+template <class T>
+void AbilityCard<T>::print() {
+    cout << this->ability.toString() << endl;
 }
 
 // TODO: Implement effects
-void AbilityCard::consume() {
-    switch (this->ability) {
-        case REROLL:
-            break;
-        case QUADRUPLE:
-            break;
-        case QUARTER:
-            break;
-        case REVERSE_DIRECTION:
-            break;
-        case SWAP:
-            break;
-        case SWITCH:
-            break;
-        case ABILITYLESS:
-            break;
-    }
-    delete this;
+template <class T>
+void AbilityCard<T>::consume() {
+    this->ability.consume();
 }

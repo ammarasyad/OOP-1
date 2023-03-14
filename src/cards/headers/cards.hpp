@@ -2,30 +2,18 @@
 #define TUBESOOP_CARDS_HPP
 #include <string>
 #include "hand.hpp"
-
-enum Ability {
-    REROLL,
-    QUADRUPLE,
-    QUARTER,
-    REVERSE_DIRECTION,
-    SWAP,
-    SWITCH,
-    ABILITYLESS
-};
-
-map<Ability, string> abilityString = {
-        {REROLL, "Reroll"},
-        {QUADRUPLE, "Quadruple"},
-        {QUARTER, "Quarter"},
-        {REVERSE_DIRECTION, "Reverse Direction"},
-        {SWAP, "Swap"},
-        {SWITCH, "Switch"},
-        {ABILITYLESS, "Abilityless"}
-};
+#include "ability.hpp" // Dummy header
 
 class Card : protected Hand {
 public:
     virtual void print() = 0;
+protected:
+    map<Color, string> colorString = {
+            {GREEN, "Hijau"},
+            {BLUE, "Biru"},
+            {YELLOW, "Kuning"},
+            {RED, "Merah"}
+    };
 };
 
 class PlayerCard : Card {
@@ -46,16 +34,18 @@ public:
     bool operator!=(const PlayerCard&) const;
     bool operator>=(const PlayerCard&) const;
     bool operator<=(const PlayerCard&) const;
+    friend ostream& operator<<(ostream&, PlayerCard);
 };
 
+template <class T>
 class AbilityCard : Card {
 private:
-    Ability ability;
+    Ability<T> ability;
 public:
-    explicit AbilityCard(Ability);
+    explicit AbilityCard(Ability<T>);
     AbilityCard(const AbilityCard&);
     virtual ~AbilityCard();
-    Ability getAbility();
+    Ability<T> getAbility();
     void print() override;
     void consume();
 };
