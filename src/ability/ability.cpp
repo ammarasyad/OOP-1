@@ -15,17 +15,16 @@ ReRoll::ReRoll(GameState& state) : Ability(state) {
 }
 
 void ReRoll::consume() {
-    if (checkAbilityCard()) {
-        cout << "Melakukan pembuangan kartu yang sedang dimiliki" << endl;
-        Player &temp = getCurrentPlayer();
-        temp.removeItem();
-        cout << "Kamu mendapatkan 2 kartu baru yaitu:";
-        temp.addItem();
-        temp.addItem();
-    }
-    else {
-        cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability REROLL.";
-    }
+    Player& current = state.getCurrentPlayer();
+
+    PlayerCard firstCard = current.getItemAt(0);
+    PlayerCard secondCard = current.getItemAt(1);
+
+    current.removeItem(firstCard);
+    current.removeItem(secondCard);
+
+    current.addItem(firstCard);
+    current.addItem(secondCard);    
 }
 
 Double::Double(GameState& state) : Ability(state) {
@@ -33,11 +32,7 @@ Double::Double(GameState& state) : Ability(state) {
 }
 
 void Double::consume() {
-    long long int before = getPoint();
-    long long int after = before * 2;
-    multiplyPoint(2);
-
-    cout << "melakukan DOUBLE! Poin hadiah naik dari " << before << " menjadi " << after << "!" << endl;
+    state.multiplyPoint(2);
 }
 
 Quadruple::Quadruple(GameState& state) : Ability(state) {
@@ -45,16 +40,7 @@ Quadruple::Quadruple(GameState& state) : Ability(state) {
 }
 
 void Quadruple::consume() {
-    long long int before = getPoint();
-    long long int after = before * 2;
-    if (checkAbilityCard()) { //belum ada
-        multiplyPoint(4);
-
-        cout << "melakukan QUADRUPLE! Poin hadiah naik dari " << before << " menjadi " << after << "!" << endl;
-    }
-    else {
-        cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability QUADRUPLE." << endl;
-    } 
+    state.multiplyPoint(4);
 }
 
 Half::Half(GameState& state) : Ability(state) {
@@ -62,17 +48,7 @@ Half::Half(GameState& state) : Ability(state) {
 }
 
 void Half::consume() {
-    long long int before = getPoint();
-
-    if (before > 1) {
-        long long int after = before / 2;
-        dividePoint(2);
-
-        cout << "melakukan HALF! Poin hadiah turun dari " << before << " menjadi " << after << "!" << endl;
-    }
-    else {
-        cout << "melakukan HALF! Sayangnya poin hadiah sudah bernilai 1. Poin hadiah tidak berubah.. Giliran dilanjut!" << endl;
-    }
+    state.dividePoint(2);
 }
 
 Quarter::Quarter(GameState& state) : Ability(state) {
@@ -80,17 +56,7 @@ Quarter::Quarter(GameState& state) : Ability(state) {
 }
 
 void Quarter::consume() {
-    long long int before = getPoint();
-
-    if (before > 2 && checkAbilityCard()) { //belum ada
-        long long int after = before / 4;
-        dividePoint(4);
-
-        cout << "melakukan QUARTER! Poin hadiah turun dari " << before << " menjadi " << after << "!" << endl;
-    }
-    else {
-        cout << "melakukan QUARTER! Sayangnya poin hadiah sudah bernilai 1. Poin hadiah tidak berubah.. Giliran dilanjut!" << endl;
-    }
+    state.dividePoint(4);
 }
 
 Reverse::Reverse(GameState& state) : Ability(state) {
@@ -98,59 +64,56 @@ Reverse::Reverse(GameState& state) : Ability(state) {
 }
 
 void Reverse::consume() {
-    if (CantUseAbility) {
-        cout << "Oops, kartu ability reversemu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << endl;
-    }
-    else {
-        if (checkAbilityCard()) {
-            cout << " melakukan REVERSE!" << endl;
-        }
-        else {
-            cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability REVERSE." << endl;
-        } 
-    }
+    state.reverseQueue();
 }
 
 SwapCard::SwapCard(GameState& state) : Ability(state) {
     this->abilityCardId = SWAPCARD;
 }
 
-void SwapCard::consume() {
-    if (CantUseAbility) {
-        cout << "Oops, kartu ability swapmu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << endl;
-    }
-    else {
-        if (checkAbilityCard()) {
-            cout << " melakukan SWAPCARD!" << endl;
-            cout << "Silahkan pilih pemain yang kartunya ingin anda tukar :" << endl;
-        }
-        else {
-            cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability SWAPCARD." << endl;
-        } 
-    }
+void SwapCard::consume(int firstTarget, int secondTarget, int firstCard, int secondCard) {
+    Player& firstPlayer = state.getPlayerById(firstTarget);
+    Player& secondPlayer = state.getPlayerById(secondTarget);
+
+    PlayerCard temp1 = firstPlayer.getItemAt(firstCard);
+    PlayerCard temp2 = secondPlayer.getItemAt(secondCard);
+
+    firstPlayer.removeItem(temp1);
+    firstPlayer.addItem(temp2);
+
+    secondPlayer.removeItem(temp2);
+    secondPlayer.addItem(temp1);
 }
 
 Switch::Switch(GameState& state) : Ability(state) {
     this->abilityCardId = SWITCH;
 }
 
-void Switch::consume() {
-    if (CantUseAbility) {
-        cout << "Oops, kartu ability switchmu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << endl;
-    }
-    else {
-        if (checkAbilityCard()) {
-            cout << " melakukan SWITCH!" << endl;
-            cout << "Silahkan pilih pemain yang kartunya ingin anda tukar :" << endl;
-        }
-        else {
-            cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability SWITCH." << endl;
-        } 
-    }
+void Switch::consume(int target) {
+    Player& selfPlayer = state.getCurrentPlayer();
+    Player& targetPlayer = state.getPlayerById(target);
+
+    PlayerCard selfCard1 = selfPlayer.getItemAt(1);
+    PlayerCard selfCard2 = selfPlayer.getItemAt(2);
+
+    PlayerCard targetCard1 = targetPlayer.getItemAt(1);
+    PlayerCard targetCard2 = targetPlayer.getItemAt(2);
+
+    selfPlayer.removeItem(selfCard1);
+    selfPlayer.removeItem(selfCard2);
+    selfPlayer.addItem(targetCard1);
+    selfPlayer.addItem(targetCard2);
+
+    targetPlayer.removeItem(targetCard1);
+    targetPlayer.removeItem(targetCard2);
+    targetPlayer.addItem(selfCard1);
+    targetPlayer.addItem(selfCard2);
 }
 
 Abilityless::Abilityless(GameState& state) : Ability(state) {
     this->abilityCardId = ABILITYLESS;
 }
 
-void Abilityless::consume() {}
+void Abilityless::consume(int target) {
+    state.getPlayerById(target).setAbilityLess();
+}
