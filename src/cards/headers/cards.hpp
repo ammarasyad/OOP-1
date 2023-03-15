@@ -43,6 +43,7 @@ private:
     int abilityCardId;
 public:
     explicit AbilityCard(Ability&);
+    AbilityCard(const AbilityCard&);
     Ability& getAbility();
     int getId() const;
     void print() override;

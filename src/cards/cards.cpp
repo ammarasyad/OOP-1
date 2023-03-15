@@ -69,6 +69,8 @@ AbilityCard::AbilityCard(Ability& ability) : ability(ability) {
     this->abilityCardId = ability.getId();
 }
 
+AbilityCard::AbilityCard(const AbilityCard &other) : AbilityCard(other.ability) {}
+
 Ability& AbilityCard::getAbility() {
     return this->ability;
 }
