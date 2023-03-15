@@ -1,4 +1,4 @@
-#include "inventoryHolder.hpp"
+#include "limitedinventory.hpp"
 #include "cards.hpp"
 
 //temp
@@ -8,15 +8,14 @@ class Deck {
 };
 
 
-class TableCards : InventoryHolder{
+class TableCards : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCard>{
     private:
-        Deck tableCards_;
     public:
-        TableCards();
-        TableCards(Deck TableCards);
+        LimitedInventory<PlayerCard> getInventory();
+        void setInventory(LimitedInventory<PlayerCard>);
 
-
-        void addCard(Card card);
-
-        void clear();
+        void addItem(PlayerCard);
+        void removeItem(PlayerCard);
+        
+        PlayerCard getItemAt(int);
 };

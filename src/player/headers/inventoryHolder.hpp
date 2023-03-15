@@ -17,6 +17,8 @@ class InventoryHolder {
         virtual void removeItem(U) = 0;
         
         virtual U getItemAt(int) = 0;
+
+        virtual void clear() = 0;
 };
 
 

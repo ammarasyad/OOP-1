@@ -16,11 +16,12 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         float handScore_;
         
         bool usedCommand_;
+        bool abilityLess_;
 
     public:
         Player();
         explicit Player(PlayerInventory deck);
-
+//-----------------------------------------------
         PlayerInventory getInventory() const;
         void setInventory(PlayerInventory);
 
@@ -31,7 +32,8 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         bool useAbilityCard(AbilityCard&);
         
         PlayerCard getItemAt(int) const;
-
+        void reset();
+//-----------------------------------------------
         int getPlayerId() const;
 
         int getPoint() const;
@@ -44,6 +46,9 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         bool haveUsedCommand() const;
         void canUseCommand();
         void cantUseCommand();
+
+        void setAbilityLess();
+        bool isAbilityLess();
 
         //operator
         bool operator<(const Player&) const;

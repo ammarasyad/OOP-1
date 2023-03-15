@@ -3,11 +3,11 @@
 
 int Player::PLAYER_AMOUNT = 0;
 
-Player::Player() : playerId_(PLAYER_AMOUNT), usedCommand_(false), handScore_(-1) {
+Player::Player() : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), handScore_(-1), point_(0) {
     PLAYER_AMOUNT++;
 }
 
-Player::Player(PlayerInventory inventory) : playerId_(PLAYER_AMOUNT), usedCommand_(false), handScore_(-1) {
+Player::Player(PlayerInventory inventory) : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), handScore_(-1), point_(0) {
     inventory_ = inventory;
     PLAYER_AMOUNT++;
     //for loop find highest color
@@ -23,14 +23,22 @@ void Player::setInventory(PlayerInventory inventory){
 }
 
 void Player::addItem(PlayerCard card){
-    // inventory_ = inventory_ + card;
+    inventory_ = inventory_ + card;
 }
 void Player::removeItem(PlayerCard card) {
-    // inventory_ = inventory_ - card;
+    inventory_ = inventory_ - card;
 }
 
 PlayerCard Player::getItemAt(int index) const{
     // return inventory_.at(index)
+}
+
+void Player::reset(){
+    inventory_.resetPlayer();
+    point_ = 0;
+    handScore_ = .0f;
+    usedCommand_ = false;
+    abilityLess_ = false;
 }
 
 void Player::setAbilityCard(AbilityCard& abilityCard) {
@@ -59,6 +67,12 @@ void Player::cantUseCommand(){
     usedCommand_ = true;
 }
 
+void Player::setAbilityLess(){
+    abilityLess_ = true;
+}
+bool Player::isAbilityLess(){
+    return abilityLess_;
+}
 
 int Player::getPlayerId() const{
     return playerId_;
