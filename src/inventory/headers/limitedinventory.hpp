@@ -5,7 +5,7 @@
 #include "limitedinventory.hpp"
 #include "generalexceptions.hpp"
 
-#include <bits/stdc++.h>
+#include <algorithm>
 
 template <class T>
 class LimitedInventory: public Inventory<T> {
