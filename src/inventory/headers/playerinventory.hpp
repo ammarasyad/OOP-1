@@ -4,7 +4,7 @@
 #include "limitedinventory.hpp"
 #include "cards.hpp"
 
-class PlayerInventory: LimitedInventory<PlayerCard> {
+class PlayerInventory: public LimitedInventory<PlayerCard> {
 private:
     AbilityCard *abilityCard;
     bool abilityAvailable;

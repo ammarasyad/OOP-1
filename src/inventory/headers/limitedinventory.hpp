@@ -12,10 +12,10 @@ public:
     explicit LimitedInventory(int);
     void addToDeck(T&);
     void removeFromDeck(T&);
-    LimitedInventory& operator+(T& card);
-    friend LimitedInventory& operator+(T&, LimitedInventory&);
-    LimitedInventory& operator-(T& card);
-    friend LimitedInventory& operator-(T&, LimitedInventory&);
+    LimitedInventory<T>& operator+(T& card);
+    friend LimitedInventory<T>& operator+(T&, LimitedInventory&);
+    LimitedInventory<T>& operator-(T& card);
+    friend LimitedInventory<T>& operator-(T&, LimitedInventory&);
     /*
      * this function switch elements between vector v1 and v2 with index indices[i][0] (v1) and index
      * indices[i][1] (v2)
