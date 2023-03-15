@@ -2,7 +2,7 @@
 #define TUBESOOP_CARDS_HPP
 #include <string>
 #include "hand.hpp"
-#include "../ability/headers/ability.hpp"
+#include "ability.hpp"
 
 class Card : protected Hand {
 public:

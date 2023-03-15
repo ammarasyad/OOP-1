@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mrdrnd")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
 
+include_directories(src/ability)
+include_directories(src/ability/headers)
 include_directories(src/cards)
 include_directories(src/cards/headers)
 include_directories(src/game)
