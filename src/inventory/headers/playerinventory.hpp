@@ -17,6 +17,11 @@ public:
     void setAbilityCard(AbilityCard&);
     void setAbilityUsed();
 
+    PlayerInventory& operator+(PlayerCard& card) override;
+    friend PlayerInventory& operator+(PlayerCard&, PlayerInventory&);
+    PlayerInventory& operator-(PlayerCard& card) override;
+    friend PlayerInventory& operator-(PlayerCard&, PlayerInventory&);
+
     void resetPlayer();
 
 };

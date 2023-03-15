@@ -38,3 +38,19 @@ bool PlayerInventory::checkAbilityMatchAndUse(AbilityCard &card) {
     }
     return false;
 }
+
+PlayerInventory &PlayerInventory::operator+(PlayerCard &card) {
+    return dynamic_cast<PlayerInventory &>(LimitedInventory::operator+(card));
+}
+
+PlayerInventory &PlayerInventory::operator-(PlayerCard &card) {
+    return dynamic_cast<PlayerInventory &>(LimitedInventory::operator-(card));
+}
+
+PlayerInventory &operator+(PlayerCard &card, PlayerInventory &inventory) {
+    return inventory + card;
+}
+
+PlayerInventory &operator-(PlayerCard &card, PlayerInventory &inventory) {
+    return inventory - card;
+}

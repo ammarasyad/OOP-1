@@ -1,5 +1,6 @@
 #include "limitedinventory.hpp"
 #include "generalexceptions.hpp"
+#include <bits/stdc++.h>
 
 template <class T>
 LimitedInventory<T>::LimitedInventory(): limit(100) {
@@ -49,8 +50,7 @@ LimitedInventory<T> &LimitedInventory<T>::operator+(T &card) {
 
 template <class T>
 LimitedInventory<T> &operator+(T &card, LimitedInventory<T> &inventory) {
-    inventory.addToDeck(card);
-    return inventory;
+    return inventory + card;
 }
 
 template <class T>
@@ -61,19 +61,5 @@ LimitedInventory<T> &LimitedInventory<T>::operator-(T &card) {
 
 template <class T>
 LimitedInventory<T> &operator-(T &card, LimitedInventory<T> &inventory) {
-    inventory.removeFromDeck(card);
-    return inventory;
-}
-
-template<class T>
-std::pair<std::vector<T> &, std::vector<T> &>
-LimitedInventory<T>::switchCards(std::vector<T> &inv1, std::vector<T> &inv2, std::vector<std::pair<int, int>> &indices) {
-    for (auto it = indices.begin(); it != indices.end(); ++it) {
-        std::pair<int, int> cPair = *it;
-        T temp = inv1.at(cPair.first);
-        inv1.at(cPair.first) = inv2.at(cPair.second);
-        inv2.at(cPair.second) = temp;
-    }
-
-    return std::make_pair(inv1, inv2);
+    return inventory - card;
 }
