@@ -45,7 +45,7 @@ public:
     explicit AbilityCard(Ability&);
     AbilityCard(const AbilityCard&);
     Ability& getAbility();
-    int getId() const;
+    float getValue() override;
     void print() override;
     void consume();
 };

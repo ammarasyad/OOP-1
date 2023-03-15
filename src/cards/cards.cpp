@@ -75,8 +75,8 @@ Ability& AbilityCard::getAbility() {
     return this->ability;
 }
 
-int AbilityCard::getId() const {
-    return this->abilityCardId;
+float AbilityCard::getValue() {
+    return (float) this->abilityCardId;
 }
 
 void AbilityCard::print() {
