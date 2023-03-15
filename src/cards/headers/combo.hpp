@@ -36,10 +36,20 @@ public:
 private:
     vector<PlayerCard> cards;
     CombinationType type;
+    map<CombinationType, string> comboString = {
+            {HIGH_PAIR, "High Pair"},
+            {PAIR, "Pair"},
+            {TWO_PAIR, "Two Pair"},
+            {THREE_OF_A_KIND, "Three of a Kind"},
+            {STRAIGHT, "Straight"},
+            {FLUSH, "Flush"},
+            {FULL_HOUSE, "Full House"},
+            {FOUR_OF_A_KIND, "Four of a Kind"},
+            {STRAIGHT_FLUSH, "Straight Flush"}
+    };
 
+    PlayerCard& getHighestCard();
     CombinationType calculateType();
-//    PlayerCard getHighestCard();
-
     bool isStraightFlush();
     bool isFourOfAKind();
     bool isFullHouse();
@@ -49,17 +59,7 @@ private:
     bool isTwoPair();
     bool isPair();
 
-    map<CombinationType, string> comboString = {
-        {HIGH_PAIR, "High Pair"},
-        {PAIR, "Pair"},
-        {TWO_PAIR, "Two Pair"},
-        {THREE_OF_A_KIND, "Three of a Kind"},
-        {STRAIGHT, "Straight"},
-        {FLUSH, "Flush"},
-        {FULL_HOUSE, "Full House"},
-        {FOUR_OF_A_KIND, "Four of a Kind"},
-        {STRAIGHT_FLUSH, "Straight Flush"}
-    };
+
 };
 
 #endif

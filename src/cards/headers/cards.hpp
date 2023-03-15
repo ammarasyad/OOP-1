@@ -7,19 +7,19 @@
 class Card : protected Hand {
 public:
     virtual void print() = 0;
-protected:
-    map<Color, string> colorString = {
-            {GREEN, "Hijau"},
-            {BLUE, "Biru"},
-            {YELLOW, "Kuning"},
-            {RED, "Merah"}
-    };
+
 };
 
 class PlayerCard : Card {
 private:
     int number;
     Color color;
+    map<Color, string> colorString = {
+            {GREEN, "Hijau"},
+            {BLUE, "Biru"},
+            {YELLOW, "Kuning"},
+            {RED, "Merah"}
+    };
 public:
     PlayerCard(int, Color);
     PlayerCard(const PlayerCard&);

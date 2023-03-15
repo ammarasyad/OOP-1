@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "headers/combo.hpp"
+#include "headers/generalexceptions.hpp"
 
 template<typename... PlayerCards>
 Combination::Combination(PlayerCards... cards) : Combination(vector<PlayerCard>{cards...}) {
@@ -14,28 +15,8 @@ Combination::Combination(vector<PlayerCard>& cards) {
     this->type = calculateType();
 }
 
-// TODO : Implement combo value
 float Combination::getValue() {
-    switch (this->type) {
-        case HIGH_PAIR:
-            break;
-        case PAIR:
-            break;
-        case TWO_PAIR:
-            break;
-        case THREE_OF_A_KIND:
-            break;
-        case STRAIGHT:
-            break;
-        case FLUSH:
-            break;
-        case FULL_HOUSE:
-            break;
-        case FOUR_OF_A_KIND:
-            break;
-        case STRAIGHT_FLUSH:
-            break;
-    }
+    return getHighestCard().getValue() + (float) this->type * 1.39f;
 }
 
 vector<PlayerCard> Combination::getCards() const {
@@ -109,6 +90,17 @@ bool Combination::operator<=(Combination& combo) {
     return *this < combo || *this == combo;
 }
 
+
+PlayerCard& Combination::getHighestCard() {
+    PlayerCard& highestValue = this->cards[0];
+    for (const auto& card: this->cards) {
+        if (card > highestValue) {
+            highestValue = card;
+        }
+    }
+    return highestValue;
+}
+
 CombinationType Combination::calculateType() {
     if (this->isStraightFlush()) {
         return STRAIGHT_FLUSH;
@@ -129,16 +121,6 @@ CombinationType Combination::calculateType() {
     }
     return HIGH_PAIR;
 }
-
-//PlayerCard Combination::getHighestCard() {
-//    PlayerCard highestValue = this->cards[0];
-//    for (const auto& card: this->cards) {
-//        if (card > highestValue) {
-//            highestValue = card;
-//        }
-//    }
-//    return highestValue;
-//}
 
 bool Combination::isStraightFlush() {
     return this->isFlush() && this->isStraight();
