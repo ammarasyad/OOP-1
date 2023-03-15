@@ -60,7 +60,7 @@ template<class T>
 std::vector<T> &Inventory<T>::getDeck() {
     return deck;
 }
-
+#include <iostream>
 
 template<class T>
 void
@@ -69,9 +69,7 @@ Inventory<T>::switchElements(Inventory<T> &inv1, Inventory<T> &inv2, std::vector
 
     for (auto it = indices.begin(); it != indices.end(); ++it) {
         std::pair<int, int> cPair = *it;
-        T temp = v1.at(cPair.first);
-        v1.at(cPair.first) = v2.at(cPair.second);
-        v1.at(cPair.second) = temp;
+        std::swap(v1[cPair.first], v2[cPair.second]);
     }
 }
 
