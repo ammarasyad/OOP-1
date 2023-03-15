@@ -3,8 +3,6 @@
 #include <string>
 #include <map>
 
-using namespace std;
-
 enum Color {
     GREEN = 0,
     BLUE = 1,

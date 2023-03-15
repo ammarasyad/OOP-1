@@ -14,7 +14,7 @@ class PlayerCard : Card {
 private:
     int number;
     Color color;
-    map<Color, string> colorString = {
+    std::map<Color, std::string> colorString = {
             {GREEN, "Hijau"},
             {BLUE, "Biru"},
             {YELLOW, "Kuning"},
@@ -25,7 +25,7 @@ public:
     PlayerCard(const PlayerCard&);
     int getNumber() const;
     Color getColor();
-    string getColorString();
+    std::string getColorString();
     float getValue() override;
     void print() override;
     bool operator>(const PlayerCard&) const;
@@ -34,7 +34,7 @@ public:
     bool operator!=(const PlayerCard&) const;
     bool operator>=(const PlayerCard&) const;
     bool operator<=(const PlayerCard&) const;
-    friend ostream& operator<<(ostream&, PlayerCard);
+    friend std::ostream& operator<<(std::ostream&, PlayerCard);
 };
 
 class AbilityCard : Card {
@@ -46,6 +46,7 @@ public:
     AbilityCard(const AbilityCard&);
     Ability& getAbility();
     float getValue() override;
+    int getId() const;
     void print() override;
     void consume();
 };

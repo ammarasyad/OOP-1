@@ -1,13 +1,13 @@
 #include <algorithm>
-#include "headers/combo.hpp"
-#include "headers/generalexceptions.hpp"
+#include "combo.hpp"
+#include "generalexceptions.hpp"
 
 template<typename... PlayerCards>
-Combination::Combination(PlayerCards... cards) : Combination(vector<PlayerCard>{cards...}) {
+Combination::Combination(PlayerCards... cards) : Combination(std::vector<PlayerCard>{cards...}) {
 
 }
 
-Combination::Combination(vector<PlayerCard>& cards) {
+Combination::Combination(std::vector<PlayerCard>& cards) {
     sort(cards.begin(), cards.end(), [](const PlayerCard &card1, const PlayerCard &card2) {
         return card1 > card2;
     });
@@ -19,7 +19,7 @@ float Combination::getValue() {
     return getHighestCard().getValue() + (float) this->type * 1.39f;
 }
 
-vector<PlayerCard> Combination::getCards() const {
+std::vector<PlayerCard> Combination::getCards() const {
     return this->cards;
 }
 
@@ -27,7 +27,7 @@ CombinationType Combination::getType() const {
     return this->type;
 }
 
-string Combination::getTypeString() {
+std::string Combination::getTypeString() {
     return this->comboString[this->type];
 }
 

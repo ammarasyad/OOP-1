@@ -1,6 +1,6 @@
 #include <iostream>
-#include "headers/cards.hpp"
-#include "headers/hand.hpp"
+#include "cards.hpp"
+#include "hand.hpp"
 #include "generalexceptions.hpp"
 
 /** Player Card **/
@@ -22,7 +22,7 @@ Color PlayerCard::getColor() {
     return this->color;
 }
 
-string PlayerCard::getColorString() {
+std::string PlayerCard::getColorString() {
     return colorString[this->color];
 }
 
@@ -31,7 +31,7 @@ float PlayerCard::getValue() {
 }
 
 void PlayerCard::print() {
-    cout << this->number << " " << this->getColorString() << endl;
+    std::cout << this->number << " " << this->getColorString() << std::endl;
 }
 
 bool PlayerCard::operator<(const PlayerCard &other) const {
@@ -59,7 +59,7 @@ bool PlayerCard::operator<=(const PlayerCard &other) const {
 }
 
 // A bit redundant, but it's okay I guess
-ostream& operator<<(ostream& os, PlayerCard card) {
+std::ostream& operator<<(std::ostream& os, PlayerCard card) {
     os << card.getNumber() << " " << card.getColorString();
     return os;
 }
@@ -76,7 +76,11 @@ Ability& AbilityCard::getAbility() {
 }
 
 float AbilityCard::getValue() {
-    return (float) this->abilityCardId;
+    return (float) this->getId();
+}
+
+int AbilityCard::getId() const {
+    return this->abilityCardId;
 }
 
 void AbilityCard::print() {

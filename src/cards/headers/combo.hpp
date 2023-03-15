@@ -21,11 +21,11 @@ class Combination : public Hand {
 public:
     template <typename... PlayerCards>
     explicit Combination(PlayerCards...);
-    explicit Combination(vector<PlayerCard>&);
+    explicit Combination(std::vector<PlayerCard>&);
     float getValue() override;
-    vector<PlayerCard> getCards() const;
+    std::vector<PlayerCard> getCards() const;
     CombinationType getType() const;
-    string getTypeString();
+    std::string getTypeString();
     PlayerCard& operator[](int);
     bool operator>(Combination&);
     bool operator<(Combination&);
@@ -34,9 +34,9 @@ public:
     bool operator>=(Combination&);
     bool operator<=(Combination&);
 private:
-    vector<PlayerCard> cards;
+    std::vector<PlayerCard> cards;
     CombinationType type;
-    map<CombinationType, string> comboString = {
+    std::map<CombinationType, std::string> comboString = {
             {HIGH_PAIR, "High Pair"},
             {PAIR, "Pair"},
             {TWO_PAIR, "Two Pair"},
