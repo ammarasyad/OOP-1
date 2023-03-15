@@ -14,6 +14,7 @@ private:
 public:
     explicit LimitedInventory();
     explicit LimitedInventory(int);
+    virtual ~LimitedInventory();
 
     void addToDeck(T&);
     void removeFromDeck(T&);

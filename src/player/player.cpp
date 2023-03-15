@@ -159,7 +159,7 @@ bool Player::operator>(const Player& other) const{
 }
 
 bool Player::operator==(const Player& other) const{
-    bool alike = handScore_ == other.handScore_;
+    return handScore_ == other.handScore_ && inventory_ == other.inventory_;
     // for(int i = 0; i < inventory_)
     //need sort
 

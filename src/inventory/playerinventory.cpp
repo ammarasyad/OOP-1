@@ -18,9 +18,14 @@ PlayerInventory::PlayerInventory(): LimitedInventory(15), abilityAvailable(false
 
 }
 
+PlayerInventory::~PlayerInventory(){
+    delete abilityCard;
+}
+
 void PlayerInventory::resetPlayer() {
     deck.clear();
     abilityAvailable = false;
+    delete abilityCard;
     abilityCard = nullptr;
 }
 
@@ -53,4 +58,18 @@ PlayerInventory &operator+(PlayerCard &card, PlayerInventory &inventory) {
 
 PlayerInventory &operator-(PlayerCard &card, PlayerInventory &inventory) {
     return inventory - card;
+}
+
+PlayerInventory& PlayerInventory::operator=(PlayerInventory& other){
+    deck = other.deck;
+    deckSize = other.deckSize;
+    delete abilityCard;
+    abilityAvailable = other.abilityAvailable;
+    if(abilityAvailable){
+        abilityCard = new AbilityCard(*(other.abilityCard));
+    } else {
+        abilityCard = nullptr;
+    }
+
+
 }

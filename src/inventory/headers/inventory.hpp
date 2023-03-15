@@ -13,9 +13,10 @@ class Inventory {
         int deckSize;
     public:
         Inventory();
+        virtual ~Inventory();
 
         virtual void addToDeck(T&);
-        T& at(int);
+        T& at(int) const;
         int getDeckSize() const;
         std::vector<T> &getDeck();
 
@@ -27,7 +28,7 @@ class Inventory {
         static void
         switchElements(Inventory<T> &inv1, Inventory<T> &inv2, std::vector<std::pair<int, int>> &indices);
 
-        virtual bool operator==(Inventory<T>&);
+        virtual bool operator==(const Inventory<T>&) const;
 
 };
 
@@ -43,7 +44,7 @@ void Inventory<T>::addToDeck(T &card) {
 }
 
 template <class T>
-T& Inventory<T>::at(int index) {
+T& Inventory<T>::at(int index) const{
     if (index >= deckSize) {
         throw InventoryException("index entered is bigger than the actual size on function Inventory::at()");
     }
@@ -75,7 +76,7 @@ Inventory<T>::switchElements(Inventory<T> &inv1, Inventory<T> &inv2, std::vector
 }
 
 template<class T>
-bool Inventory<T>::operator==(Inventory<T> &comp) {
+bool Inventory<T>::operator==(const Inventory<T> &comp) const{
     if (this->deckSize != comp.deckSize)
         return false;
 

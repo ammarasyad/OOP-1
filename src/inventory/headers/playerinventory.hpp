@@ -10,6 +10,7 @@ private:
     bool abilityAvailable;
 public:
     PlayerInventory();
+    ~PlayerInventory();
 
     bool isAbilityAvailable() const;
     bool isAbilityMatch(AbilityCard &card);
@@ -21,6 +22,8 @@ public:
     friend PlayerInventory& operator+(PlayerCard&, PlayerInventory&);
     PlayerInventory& operator-(PlayerCard& card) override;
     friend PlayerInventory& operator-(PlayerCard&, PlayerInventory&);
+
+    PlayerInventory& operator=(PlayerInventory&);
 
     void resetPlayer();
 
