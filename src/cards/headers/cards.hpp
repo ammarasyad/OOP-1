@@ -41,6 +41,17 @@ class AbilityCard : Card {
 private:
     Ability& ability;
     int abilityCardId;
+    std::map<AbilityIds, std::string> abilityString = {
+            {REROLL, "Reroll"},
+            {DOUBLE, "Double"},
+            {QUADRUPLE, "Quadruple"},
+            {HALF, "Half"},
+            {QUARTER, "Quarter"},
+            {REVERSE, "Reverse"},
+            {SWAPCARD, "Swap Card"},
+            {SWITCH, "Switch"},
+            {ABILITYLESS, "Abilityless"}
+    };
 public:
     explicit AbilityCard(Ability&);
     AbilityCard(const AbilityCard&);

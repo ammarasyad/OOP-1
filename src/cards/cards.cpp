@@ -84,7 +84,7 @@ int AbilityCard::getId() const {
 }
 
 void AbilityCard::print() {
-
+    std::cout << this->abilityString[this->abilityCardId] << std::endl;
 }
 
 void AbilityCard::consume() {
