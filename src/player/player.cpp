@@ -14,7 +14,7 @@ Player::Player(PlayerInventory inventory) : playerId_(PLAYER_AMOUNT), usedComman
 }
 
 //virtual func implementation
-PlayerInventory Player::getInventory(){
+PlayerInventory Player::getInventory() const{
     return inventory_;
 }
 
@@ -29,18 +29,27 @@ void Player::removeItem(PlayerCard card) {
     // inventory_ = inventory_ - card;
 }
 
-PlayerCard Player::getItemAt(int index){
+PlayerCard Player::getItemAt(int index) const{
     // return inventory_.at(index)
 }
 
-float Player::getHandScore(){
+void Player::setAbilityCard(AbilityCard& abilityCard) {
+    inventory_.setAbilityCard(abilityCard);
+}
+
+
+bool Player::useAbilityCard(AbilityCard& abilityCard){
+    return inventory_.checkAbilityMatchAndUse(abilityCard);
+}
+
+float Player::getHandScore() const{
     return handScore_;
 }
 void Player::setHandScore(float handScore){
     handScore_ = handScore;
 }
 
-bool Player::haveUsedCommand(){
+bool Player::haveUsedCommand() const{
     return usedCommand_;
 }
 void Player::canUseCommand(){
@@ -51,11 +60,11 @@ void Player::cantUseCommand(){
 }
 
 
-int Player::getPlayerId(){
+int Player::getPlayerId() const{
     return playerId_;
 }
 
-int Player::getPoint(){
+int Player::getPoint() const{
     return point_;
 }
 
@@ -68,27 +77,31 @@ void Player::addPoint(int amount){
 }
 
 //operator
-bool Player::operator<(Player other){
+bool Player::operator<(const Player& other) const{
     if(handScore_ < 0) {
         throw PlayerException("Player hand combination score unknown.");
+    } else {
+
     }
 
     if(handScore_ == other.handScore_){
-        Color thisColorPriority = GREEN;
-        Color otherColorPriority = GREEN;
+        int thisColorPriority = 1 * GREEN;
+        int otherColorPriority = 1 * GREEN;
 
-        for(int i = 0; i < inventory_.getLength(); i++){
-            Color tempColor = inventory_.at(i).getColor();
+        for(int i = 0; i < inventory_.getDeckSize(); i++){
+            int tempColor = inventory_.at(i).getColor() * inventory_.at(i).getNumber();
             thisColorPriority = tempColor > thisColorPriority ? tempColor : thisColorPriority;
         }
 
-        for(int i = 0; i < other.inventory_.getLength(); i++){
-            Color tempColor = other.inventory_.at(i).getColor();
+        for(int i = 0; i < other.inventory_.getDeckSize(); i++){
+            int tempColor = other.inventory_.at(i).getColor() * other.inventory_.at(i).getNumber();
             otherColorPriority = tempColor > otherColorPriority ? tempColor : otherColorPriority;
         }
 
         if(thisColorPriority < otherColorPriority){
             return true;
+        } else {
+            return false;
         }
     } else {
         if(handScore_ < other.handScore_){
@@ -98,5 +111,42 @@ bool Player::operator<(Player other){
         }
     }
 }
-bool operator>(Player);
-bool operator==(Player);
+bool Player::operator>(const Player& other) const{
+    if(handScore_ < 0) {
+        throw PlayerException("Player hand combination score unknown.");
+    }
+
+    if(handScore_ == other.handScore_){
+        int thisColorPriority = 1 * GREEN;
+        int otherColorPriority = 1 * GREEN;
+
+        for(int i = 0; i < inventory_.getDeckSize(); i++){
+            int tempColor = inventory_.at(i).getColor() * inventory_.at(i).getNumber();
+            thisColorPriority = tempColor > thisColorPriority ? tempColor : thisColorPriority;
+        }
+
+        for(int i = 0; i < other.inventory_.getDeckSize(); i++){
+            int tempColor = other.inventory_.at(i).getColor() * other.inventory_.at(i).getNumber();
+            otherColorPriority = tempColor > otherColorPriority ? tempColor : otherColorPriority;
+        }
+
+        if(thisColorPriority > otherColorPriority){
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        if(handScore_ > other.handScore_){
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+bool Player::operator==(const Player& other) const{
+    bool alike = handScore_ == other.handScore_;
+    // for(int i = 0; i < inventory_)
+    //need sort
+
+}

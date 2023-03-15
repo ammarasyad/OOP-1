@@ -15,7 +15,6 @@ class TableCards : InventoryHolder{
         TableCards();
         TableCards(Deck TableCards);
 
-        void showInventory() override;
 
         void addCard(Card card);
 

@@ -12,8 +12,8 @@ class Inventory {
     public:
         Inventory();
         virtual void addToDeck(T&) = 0;
-        T& at(int);
-        int getDeckSize();
+        T& at(int) const;
+        int getDeckSize() const;
 };
 
 #endif //IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_INVENTORY_HPP

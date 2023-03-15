@@ -7,7 +7,7 @@ Inventory<T>::Inventory(): deckSize(0) {
 }
 
 template <class T>
-T& Inventory<T>::at(int index) {
+T& Inventory<T>::at(int index) const{
     if (index >= deckSize) {
         throw InventoryException("index entered is bigger than the actual size on function Inventory::at()");
     }
@@ -15,6 +15,6 @@ T& Inventory<T>::at(int index) {
 }
 
 template <class T>
-int Inventory<T>::getDeckSize() {
+int Inventory<T>::getDeckSize() const{
     return deckSize;
 }

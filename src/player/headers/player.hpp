@@ -21,31 +21,34 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         Player();
         explicit Player(PlayerInventory deck);
 
-        PlayerInventory getInventory();
+        PlayerInventory getInventory() const;
         void setInventory(PlayerInventory);
 
         void addItem(PlayerCard);
         void removeItem(PlayerCard);
+
+        void setAbilityCard(AbilityCard&);
+        bool useAbilityCard(AbilityCard&);
         
-        PlayerCard getItemAt(int);
+        PlayerCard getItemAt(int) const;
 
-        int getPlayerId();
+        int getPlayerId() const;
 
-        int getPoint();
+        int getPoint() const;
         void setPoint(int);
         void addPoint(int);
 
-        float getHandScore();
+        float getHandScore() const;
         void setHandScore(float);
 
-        bool haveUsedCommand();
+        bool haveUsedCommand() const;
         void canUseCommand();
         void cantUseCommand();
 
         //operator
-        bool operator<(Player);
-        bool operator>(Player);
-        bool operator==(Player);
+        bool operator<(const Player&) const;
+        bool operator>(const Player&) const;
+        bool operator==(const Player&) const;
 
 };
 
