@@ -1,9 +1,12 @@
-#include "limitedinventory.hpp"
-#include "generalexceptions.hpp"
+#ifdef LIMITED_INVENTORY
+
+#include "headers/limitedinventory.hpp"
+#include "../exceptions/headers/generalexceptions.hpp"
 #include <bits/stdc++.h>
 
-template <class T>
-LimitedInventory<T>::LimitedInventory(): limit(100) {
+template<class T>
+LimitedInventory<T>::LimitedInventory(): limit(0) {
+
 }
 
 template <class T>
@@ -63,3 +66,5 @@ template <class T>
 LimitedInventory<T> &operator-(T &card, LimitedInventory<T> &inventory) {
     return inventory - card;
 }
+
+#endif
