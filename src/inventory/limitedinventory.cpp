@@ -27,13 +27,53 @@ void LimitedInventory<T>::addToDeck(T &card) {
 }
 
 template <class T>
-std::vector<T> &LimitedInventory<T>::operator+(T &card) {
-    addToDeck(card);
-    return this->deck;
+void LimitedInventory<T>::removeFromDeck(T &card) {
+    if (this->deckSize <= 0) {
+        throw InventoryException("inventory is empty when trying to remove element");
+    }
+
+    auto it = std::find(this->deck.begin(), this->deck.end(), card);
+    if (it == this->deck.end()) {
+        throw InventoryException("card to delete not found");
+    }
+
+    this->deck.erase(it);
+    this->deckSize -= 1;
 }
 
 template <class T>
-vector<T> &operator+(T &card, LimitedInventory<T> &inventory) {
+LimitedInventory<T> &LimitedInventory<T>::operator+(T &card) {
+    addToDeck(card);
+    return *this;
+}
+
+template <class T>
+LimitedInventory<T> &operator+(T &card, LimitedInventory<T> &inventory) {
     inventory.addToDeck(card);
-    return inventory.deck;
+    return inventory;
+}
+
+template <class T>
+LimitedInventory<T> &LimitedInventory<T>::operator-(T &card) {
+    this->removeFromDeck(card);
+    return *this;
+}
+
+template <class T>
+LimitedInventory<T> &operator-(T &card, LimitedInventory<T> &inventory) {
+    inventory.removeFromDeck(card);
+    return inventory;
+}
+
+template<class T>
+std::pair<std::vector<T> &, std::vector<T> &>
+LimitedInventory<T>::switchCards(std::vector<T> &inv1, std::vector<T> &inv2, std::vector<std::pair<int, int>> &indices) {
+    for (auto it = indices.begin(); it != indices.end(); ++it) {
+        std::pair<int, int> cPair = *it;
+        T temp = inv1.at(cPair.first);
+        inv1.at(cPair.first) = inv2.at(cPair.second);
+        inv2.at(cPair.second) = temp;
+    }
+
+    return std::make_pair(inv1, inv2);
 }
