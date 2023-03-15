@@ -23,14 +23,10 @@ public:
 
     template<class U>
     friend LimitedInventory<U>& operator+(U&, LimitedInventory<U>&);
-
-    template<class U>
-    friend LimitedInventory<U>& operator-(U&, LimitedInventory<U>&);
-
 };
 
 template<class T>
-LimitedInventory<T>::LimitedInventory(): limit(0) {
+LimitedInventory<T>::LimitedInventory(): limit(1) {
 
 }
 
@@ -85,11 +81,6 @@ template <class T>
 LimitedInventory<T> &LimitedInventory<T>::operator-(T &card) {
     this->removeFromDeck(card);
     return *this;
-}
-
-template <class T>
-LimitedInventory<T> &operator-(T &card, LimitedInventory<T> &inventory) {
-    return inventory - card;
 }
 
 #endif //IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_LIMITEDINVENTORY_HPP
