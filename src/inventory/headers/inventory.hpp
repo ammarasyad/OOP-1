@@ -13,6 +13,8 @@ class Inventory {
         Inventory();
         virtual void addToDeck(T&) = 0;
         virtual std::vector<T>& operator+(T&) = 0;
+        T& at(int);
+        int getDeckSize();
 };
 
 #endif //IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_INVENTORY_HPP
