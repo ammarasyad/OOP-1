@@ -2,16 +2,7 @@
 #define IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_GAMESTATE_HPP
 
 #include <vector>
-//#include "player.hpp"
-
-class Player {
-public:
-    int num;
-    Player(int num): num(num) {}
-    int getPlayerId() {
-        return num;
-    }
-};
+#include "player.hpp"
 
 class GameState {
     /*
