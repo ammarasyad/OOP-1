@@ -13,7 +13,7 @@ class GameState {
      * */
     private:
         std::vector<Player*> queue;
-        std::vector<Player> playerList;
+        std::vector<Player> &playerList;
 
         std::vector<Player*>::iterator currentStart;
         std::vector<Player*>::iterator currentEnd;
