@@ -41,7 +41,7 @@ class AbilityCard : Card {
 private:
     Ability& ability;
     int abilityCardId;
-    std::map<AbilityIds, std::string> abilityString = {
+    std::map<int, std::string> abilityString = {
             {REROLL, "Reroll"},
             {DOUBLE, "Double"},
             {QUADRUPLE, "Quadruple"},
