@@ -71,9 +71,16 @@ SwapCard::SwapCard(GameState& state) : Ability(state) {
     this->abilityCardId = SWAPCARD;
 }
 
-void SwapCard::consume(int firstTarget, int secondTarget, int firstCard, int secondCard) {
-    Player& firstPlayer = state.getPlayerById(firstTarget);
-    Player& secondPlayer = state.getPlayerById(secondTarget);
+void SwapCard::setTarget(int firstTargetId, int secondTargetId, int firstCard, int secondCard) {
+    this-> firstTargetId = firstTargetId;
+    this-> secondTargetId = secondTargetId;
+    this-> firstCard = firstCard;
+    this-> secondCard = secondCard;
+}
+
+void SwapCard::consume() {
+    Player& firstPlayer = state.getPlayerById(firstTargetId);
+    Player& secondPlayer = state.getPlayerById(secondTargetId);
 
     PlayerCard temp1 = firstPlayer.getItemAt(firstCard);
     PlayerCard temp2 = secondPlayer.getItemAt(secondCard);
@@ -89,9 +96,13 @@ Switch::Switch(GameState& state) : Ability(state) {
     this->abilityCardId = SWITCH;
 }
 
-void Switch::consume(int target) {
+void Switch::setTarget(int targetId) {
+    this-> targetId = targetId;
+}
+
+void Switch::consume() {
     Player& selfPlayer = state.getCurrentPlayer();
-    Player& targetPlayer = state.getPlayerById(target);
+    Player& targetPlayer = state.getPlayerById(targetId);
 
     PlayerCard selfCard1 = selfPlayer.getItemAt(1);
     PlayerCard selfCard2 = selfPlayer.getItemAt(2);
@@ -114,6 +125,10 @@ Abilityless::Abilityless(GameState& state) : Ability(state) {
     this->abilityCardId = ABILITYLESS;
 }
 
-void Abilityless::consume(int target) {
-    state.getPlayerById(target).setAbilityLess();
+void Abilityless::setTarget(int targetId) {
+    this-> targetId = targetId;
+}
+
+void Abilityless::consume() {
+    state.getPlayerById(targetId).setAbilityLess();
 }

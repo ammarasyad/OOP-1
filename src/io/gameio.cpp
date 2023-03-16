@@ -20,7 +20,7 @@ void GameIO::cantUseAbility() {
 
 void GameIO::reRollIO(GameState& game_state) {
     ReRoll reroll(game_state);
-    if (game_state.getCurrentPlayer().useAbilityCard(reroll)) {
+    if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(reroll))) {
         std::cout << "Melakukan pembuangan kartu yang sedang dimiliki" << std::endl;
         std::cout << "Kamu mendapatkan 2 kartu baru yaitu:" << std::endl;
         reroll.consume();
@@ -75,7 +75,7 @@ void GameIO::halfIO(GameState& game_state) {
 
 void GameIO::quarterIO(GameState& game_state) {
     Quarter quarter(game_state);
-    if (game_state.getCurrentPlayer().useAbilityCard(quarter)) {
+    if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(quarter))) {
         if (game_state.getPoint() > 2) {
             long long int before = game_state.getPoint();
             quarter.consume();
@@ -94,7 +94,7 @@ void GameIO::quarterIO(GameState& game_state) {
 
 void GameIO::reverseIO(GameState& game_state) {
     Reverse reversE(game_state);
-    if (game_state.getCurrentPlayer().useAbilityCard(reversE)) {
+    if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(reversE))) {
         std::cout << game_state.getCurrentPlayer().getName() << " melakukan REVERSE" << std::endl;
         std::cout << "Urutan eksekusi giliran ini : ";
         printQueue(game_state.getQueue());
@@ -119,16 +119,17 @@ void GameIO::printQueue(std::vector<Player*> queue) {
 
 void GameIO::swapCardIO(GameState& game_state) {
     SwapCard swapcard(game_state);
-    if (game_state.getCurrentPlayer().useAbilityCard(swapcard)) {
+    if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(swapcard))) {
         std::cout << game_state.getCurrentPlayer().getName() << " melakukan SWAPCARD" << std::endl;
 
         int firstTargetId = firstSwapTarget(game_state.getCurrentPlayer(), game_state.getPlayerList());
-        int secondTargetId = secondSwapTarget(game_state.getCurrentPlayer());
+        int secondTargetId = secondSwapTarget(game_state.getCurrentPlayer(), firstTargetId, game_state.getPlayerList());
         
         int firstCard = firstSwapCard(game_state.getPlayerById(firstTargetId));
         int secondCard = secondSwapCard(game_state.getPlayerById(secondTargetId));
 
-        swapcard.consume(firstTargetId, secondTargetId, firstCard-1, secondCard-1);
+        swapcard.setTarget(firstTargetId, secondTargetId, firstCard-1, secondCard-1);
+        swapcard.consume();
     }
     else {
         std::cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability SWAPCARD." << std::endl;
@@ -147,7 +148,7 @@ int GameIO::firstSwapTarget(Player player, std::vector<Player> player_list) {
     }
 
     for (int k = 0; k < 6; k++) {
-        std::cout << target_list.at(k).first << ". " << target_list.at(k).second.getPlayerName() << std::endl;
+        std::cout << target_list.at(k).first << ". " << target_list.at(k).second.getName() << std::endl;
     }
 
     int target;
@@ -168,7 +169,7 @@ int GameIO::secondSwapTarget(Player player, int first_id, std::vector<Player> pl
     }
 
     for (int k = 0; k < 5; k++) {
-        std::cout << target_list.at(k).first << ". " << target_list.at(k).second.getPlayerName() << std::std::endl;
+        std::cout << target_list.at(k).first << ". " << target_list.at(k).second.getName() << std::endl;
     }
 
     int target;
@@ -178,7 +179,7 @@ int GameIO::secondSwapTarget(Player player, int first_id, std::vector<Player> pl
 }
 
 int GameIO::firstSwapCard(Player first_player) {
-    std::cout << "Silahkan pilih kartu kanan/kiri " << first_player.getPlayerName() << std::std::endl;
+    std::cout << "Silahkan pilih kartu kanan/kiri " << first_player.getName() << std::endl;
     std::cout << "1. Kanan" << std::endl;
     std::cout << "2. Kiri" << std::endl;
 
@@ -189,7 +190,7 @@ int GameIO::firstSwapCard(Player first_player) {
 }
 
 int GameIO::secondSwapCard(Player second_player) {
-    std::cout << "Silahkan pilih kartu kanan/kiri " << second_player.getPlayerName() << std::endl;
+    std::cout << "Silahkan pilih kartu kanan/kiri " << second_player.getName() << std::endl;
     std::cout << "1. Kanan" << std::endl;
     std::cout << "2. Kiri" << std::endl;
 
@@ -201,7 +202,7 @@ int GameIO::secondSwapCard(Player second_player) {
 
 void GameIO::switchIO(GameState& game_state) {
     Switch switcH(game_state);
-    if (game_state.getCurrentPlayer().useAbilityCard(switcH)) {
+    if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(switcH))) {
         std::cout << game_state.getCurrentPlayer().getName() << " melakukan SWITCH" << std::endl;
 
         PlayerCard firstCard = game_state.getCurrentPlayer().getItemAt(0);
@@ -212,7 +213,8 @@ void GameIO::switchIO(GameState& game_state) {
 
         int targetId = firstSwapTarget(game_state.getCurrentPlayer(), game_state.getPlayerList());
 
-        switcH.consume(targetId);
+        switcH.setTarget(targetId);
+        switcH.consume();
 
         std::cout << "Kedua kartu " << game_state.getCurrentPlayer().getName() << " telah ditukar dengan " << game_state.getPlayerById(targetId).getName() << "!" << std::endl;
 
@@ -229,7 +231,7 @@ void GameIO::switchIO(GameState& game_state) {
 
 void GameIO::abilitylessIO(GameState& game_state) {
     Abilityless abilityless(game_state);
-    if (game_state.getCurrentPlayer().useAbilityCard(abilityless)) {
+    if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(abilityless))) {
         int targetId = targetAbilityless(game_state.getCurrentPlayer(), game_state.getPlayerList());
     } 
     else {
@@ -247,7 +249,7 @@ bool GameIO::checkNoAbilty(Player player, std::vector<Player> player_list) {
 }
 
 int GameIO::targetAbilityless(Player player, std::vector<Player> player_list) {
-    std::cout << player.getPlayerName() << " akan mematikan kartu ability lawan!" << std::endl;
+    std::cout << player.getName() << " akan mematikan kartu ability lawan!" << std::endl;
     std::cout << "Silahkan pilih pemain yang kartu abilitynya ingin dimatikan:" << std::endl;
 
     std::vector <std::pair<int, Player>> target_list;   
@@ -260,7 +262,7 @@ int GameIO::targetAbilityless(Player player, std::vector<Player> player_list) {
     }
 
     for (int k = 0; k < 6; k++) {
-        std::cout << target_list.at(k).first << ". " << target_list.at(k).second.getPlayerName() << std::endl;
+        std::cout << target_list.at(k).first << ". " << target_list.at(k).second.getName() << std::endl;
     }
 
     int target;

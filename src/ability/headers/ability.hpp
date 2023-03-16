@@ -70,24 +70,36 @@ public:
 };
 
 class SwapCard : public Ability {
+private:
+    int firstTargetId;
+    int secondTargetId;
+    int firstCard;
+    int secondCard;
 public:
     explicit SwapCard(GameState&);
     explicit SwapCard(GameState&&) = delete;
-    void consume(int , int , int , int);
+    void setTarget(int, int, int, int);
+    void consume() override;
 };
 
 class Switch : public Ability {
+private:
+    int targetId;
 public:
     explicit Switch(GameState&);
     explicit Switch(GameState&&) = delete;
-    void consume(int);
+    void setTarget(int);
+    void consume() override;
 };
 
 class Abilityless : public Ability {
+private:
+    int targetId;
 public:
     explicit Abilityless(GameState&);
     explicit Abilityless(GameState&&) = delete;
-    void consume(int);
+    void setTarget(int);
+    void consume() override;
 };
 
 #endif 
