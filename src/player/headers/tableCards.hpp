@@ -4,6 +4,9 @@
 #include "limitedinventory.hpp"
 #include "cards.hpp"
 
+class PlayerCard;
+template <class T>
+class LimitedInventory;
 
 class TableCards : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCard>{
     private:
@@ -17,7 +20,7 @@ class TableCards : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCa
         void addItem(const PlayerCard&) override;
         void removeItem(const PlayerCard&) override;
         
-        PlayerCard getItemAt(const int&) const override;
+        PlayerCard getItemAt(const int&) override;
 
         void reset() override;
 };

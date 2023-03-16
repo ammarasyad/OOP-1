@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.24)
 project(IF2210_Pemrograman_Berorientasi_Objek)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mrdrnd")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mrdrnd")
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
 
 include_directories(src/ability)
 include_directories(src/ability/headers)
@@ -30,8 +30,10 @@ add_executable(IF2210_Pemrograman_Berorientasi_Objek
         src/inventory/headers/inventory.hpp src/inventory/inventory.cpp
         src/inventory/headers/limitedinventory.hpp src/inventory/limitedinventory.cpp
         src/inventory/headers/playerinventory.hpp src/inventory/playerinventory.cpp
-        src/io/headers/gameio.hpp src/io/gameio.cpp
+        src/io/headers/gameio.hpp
         src/player/headers/inventoryHolder.hpp
         src/player/headers/player.hpp src/player/player.cpp
         src/player/headers/tableCards.hpp src/player/tableCards.cpp
-        src/main.cpp src/random.hpp)
+        src/main.cpp src/random.hpp src/io/gameio.cpp src/inventory/headers/deckinventory.hpp
+        src/inventory/deckinventory.cpp
+        src/player/headers/deckCard.hpp src/player/deckCard.cpp)

@@ -94,5 +94,5 @@ PlayerInventory& PlayerInventory::operator=(PlayerInventory& other){
         abilityCard = nullptr;
     }
 
-
+    return *this;
 }

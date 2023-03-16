@@ -4,6 +4,9 @@
 #include "limitedinventory.hpp"
 #include "cards.hpp"
 
+//class AbilityCard;
+//class PlayerCard;
+
 class PlayerInventory: public LimitedInventory<PlayerCard> {
 private:
     AbilityCard *abilityCard;

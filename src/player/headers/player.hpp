@@ -1,13 +1,21 @@
 #ifndef IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_PLAYER_HPP
 #define IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_PLAYER_HPP
 
+class PlayerCard;
+class AbilityCard;
+class PlayerInventory;
+template <class T, class U>
+class InventoryHolder;
+class DeckInventory;
+class DeckCard;
+
+#include "deckCard.hpp"
+#include "deckinventory.hpp"
 #include "cards.hpp"
 #include "inventoryHolder.hpp"
 #include "playerinventory.hpp"
 
-
-// TODO: dummy class, please change later
-class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
+class Player : public InventoryHolder<PlayerInventory, PlayerCard> {
     private:
         std::string name_;
 
@@ -25,17 +33,17 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         explicit Player(PlayerInventory deck, std::string name);
 
 //-----------------------------------------------
-        PlayerInventory getInventory() const override;
-        void setInventory(PlayerInventory) override;
+        PlayerInventory getInventory() const;
+        void setInventory(PlayerInventory);
 
-        void addItem(const PlayerCard&) override;
-        void removeItem(const PlayerCard&) override;
+        void addItem(const PlayerCard&);
+        void removeItem(const PlayerCard&);
 
         void setAbilityCard(const AbilityCard&);
         bool useAbilityCard(const AbilityCard&);
         
-        PlayerCard getItemAt(const int&) const override;
-        void reset() override;
+        PlayerCard getItemAt(const int&);
+        void reset();
 //-----------------------------------------------
         int getPlayerId() const;
 

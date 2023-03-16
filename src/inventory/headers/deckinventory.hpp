@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <random>
 
+//class PlayerCard;
+
 class DeckInventory: public LimitedInventory<PlayerCard> {
 private:
 public:

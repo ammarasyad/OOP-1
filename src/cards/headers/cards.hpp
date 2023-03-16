@@ -1,9 +1,22 @@
 #ifndef TUBESOOP_CARDS_HPP
 #define TUBESOOP_CARDS_HPP
+
 #include <string>
 #include "hand.hpp"
 #include "ability.hpp"
 
+class Ability;
+enum AbilityIds {
+    REROLL = 1,
+    DOUBLE = 2,
+    QUADRUPLE = 3,
+    HALF = 4,
+    QUARTER = 5,
+    REVERSE = 6,
+    SWAPCARD = 7,
+    SWITCH = 8,
+    ABILITYLESS = 9
+};
 class Card : protected Hand {
 public:
     virtual void print() = 0;

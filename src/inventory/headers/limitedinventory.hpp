@@ -14,10 +14,10 @@ private:
 public:
     explicit LimitedInventory();
     explicit LimitedInventory(int);
-    virtual ~LimitedInventory();
+    virtual ~LimitedInventory() = default;
 
-    void addToDeck(T&);
-    void removeFromDeck(T&);
+    void addToDeck(const T&);
+    void removeFromDeck(const T&);
 
     LimitedInventory<T> operator+(const T& card) const;
     LimitedInventory<T> operator-(const T& card) const;
@@ -29,6 +29,12 @@ public:
     friend LimitedInventory<U>& operator+(U&, LimitedInventory<U>&);
 
 };
+
+template<class U>
+LimitedInventory<U> &operator+(U &el, LimitedInventory<U> &inven) {
+    inven.addToDeck(el);
+    return inven;
+}
 
 template<class T>
 LimitedInventory<T>::LimitedInventory(): limit(1) {
@@ -48,7 +54,7 @@ LimitedInventory<T>::LimitedInventory(int limit): limit(limit) {
 }
 
 template <class T>
-void LimitedInventory<T>::addToDeck(T &card) {
+void LimitedInventory<T>::addToDeck(const T &card) {
     if (this->deckSize >= limit) {
         throw InventoryException("inventory limit exceeded");
     }
@@ -57,7 +63,7 @@ void LimitedInventory<T>::addToDeck(T &card) {
 }
 
 template <class T>
-void LimitedInventory<T>::removeFromDeck(T &card) {
+void LimitedInventory<T>::removeFromDeck(const T &card) {
     if (this->deckSize <= 0) {
         throw InventoryException("inventory is empty when trying to remove element");
     }

@@ -1,20 +1,10 @@
 #ifndef IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_ABILITY_HPP
 #define IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_ABILITY_HPP
 
-#include "gamestate.hpp"
 #include "player.hpp"
+#include "gamestate.hpp"
 
-enum AbilityIds {
-    REROLL = 1,
-    DOUBLE = 2,
-    QUADRUPLE = 3,
-    HALF = 4,
-    QUARTER = 5,
-    REVERSE = 6,
-    SWAPCARD = 7,
-    SWITCH = 8,
-    ABILITYLESS = 9
-};
+class GameState;
 
 class Ability {
 protected:

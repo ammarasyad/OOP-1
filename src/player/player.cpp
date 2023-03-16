@@ -12,7 +12,7 @@ Player::Player(std::string name) : Player() {
 }
 
 Player::Player(PlayerInventory inventory) : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), point_(0) {
-    inventory_ = inventory;
+    inventory_ = &inventory;
     PLAYER_AMOUNT++;
     //for loop find highest color
 }
@@ -24,38 +24,38 @@ Player::Player(PlayerInventory inventory, std::string name) : Player(inventory) 
 
 //virtual func implementation
 PlayerInventory Player::getInventory() const{
-    return inventory_;
+    return *inventory_;
 }
 
 void Player::setInventory(PlayerInventory inventory){
-    inventory_ = inventory;
+    inventory_ = &inventory;
 }
 
 void Player::addItem(const PlayerCard& card){
-    inventory_  += card;
+    *inventory_  += card;
 }
 void Player::removeItem(const PlayerCard& card) {
-    inventory_ -= card;
+    *inventory_ -= card;
 }
 
-PlayerCard Player::getItemAt(const int& index) const{
-    // return inventory_.at(index)
+PlayerCard Player::getItemAt(const int& index){
+     return inventory_->at(index);
 }
 
 void Player::reset(){
-    inventory_.resetPlayer();
+    inventory_->resetPlayer();
     point_ = 0;
     usedCommand_ = false;
     abilityLess_ = false;
 }
 
 void Player::setAbilityCard(const AbilityCard& abilityCard) {
-    inventory_.setAbilityCard(abilityCard);
+    inventory_->setAbilityCard(abilityCard);
 }
 
 
 bool Player::useAbilityCard(const AbilityCard& abilityCard){
-    return inventory_.checkAbilityMatchAndUse(abilityCard);
+    return inventory_->checkAbilityMatchAndUse(abilityCard);
 }
 
 bool Player::haveUsedCommand() const{

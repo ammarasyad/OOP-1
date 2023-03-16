@@ -3,7 +3,6 @@
 
 #include <vector>
 
-#include "inventory.hpp"
 #include "generalexceptions.hpp"
 
 template <class T>
@@ -16,7 +15,7 @@ class Inventory {
         virtual ~Inventory() = default;
 
         virtual void addToDeck(T&);
-        T& at(int) const;
+        T& at(int);
         int getDeckSize() const;
         std::vector<T> &getDeck();
 
@@ -46,7 +45,7 @@ void Inventory<T>::addToDeck(T &card) {
 }
 
 template <class T>
-T& Inventory<T>::at(int index) const{
+T& Inventory<T>::at(int index) {
     if (index >= deckSize) {
         throw InventoryException("index entered is bigger than the actual size on function Inventory::at()");
     }
