@@ -31,6 +31,7 @@ class GameIO {
         void quarterIO(GameState& game_state);
 
         void reverseIO(GameState& game_state);
+        void secondCommand(Player currentPlayer, GameState& game_state);
         void printQueue(std::vector<Player*> queue);
 
         void swapCardIO(GameState& game_state);

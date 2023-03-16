@@ -36,11 +36,15 @@ void GameIO::getCommand(GameState& game_state) {
     std::cout << "Masukkan command anda: ";
     std::string command;
     std::cin >> command;
+    std::cout << std::endl;
+
 
     while(std::find(commandList.begin(), commandList.end(), command) == commandList.end()) {
         std::cout << "Command yang anda masukan invalid." << std::endl;
         std::cout << "Masukkan kembali command anda: ";
         std::cin >> command;
+        std::cout << std::endl;
+
     }
 
     if (command == "NEXT") {
@@ -48,13 +52,16 @@ void GameIO::getCommand(GameState& game_state) {
     }
     else if (command == "DOUBLE") {
         doubleIO(game_state);
+        game_state.nextTurn();
     }
     else if (command == "HALF") {
-        doubleIO(game_state);
+        halfIO(game_state);
+        game_state.nextTurn();
     }
     else {
         if (game_state.getCurrentPlayer().isAbilityLess()) {
             std::cout << "Oops, kartu abilitymu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << std::endl;
+            getCommand(game_state);
         }
         else {
             if (command == "RE-ROLL") {
@@ -117,7 +124,6 @@ void GameIO::doubleIO(GameState& game_state) {
     long long int after = game_state.getPoint();
 
     std::cout << game_state.getCurrentPlayer().getName() << "melakukan DOUBLE! Poin hadiah naik dari " << before << " menjadi " << after << "!" << std::endl;
-    game_state.nextTurn();
 }
 
 void GameIO::quadrupleIO(GameState& game_state) {
@@ -143,11 +149,9 @@ void GameIO::halfIO(GameState& game_state) {
         long long int after = game_state.getPoint();
 
         std::cout << game_state.getCurrentPlayer().getName() << "melakukan HALF! Poin hadiah turun dari " << before << " menjadi " << after << "!" << std::endl;
-        game_state.nextTurn();
     }
     else {
         std::cout << game_state.getCurrentPlayer().getName() << "melakukan HALF! Sayangnya poin hadiah sudah bernilai 1. Poin hadiah tidak berubah.. Giliran dilanjut!" << std::endl;
-        game_state.nextTurn();
     }
 }
 
@@ -175,26 +179,75 @@ void GameIO::quarterIO(GameState& game_state) {
 void GameIO::reverseIO(GameState& game_state) {
     Reverse reversE(game_state);
     if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(reversE))) {
+        int currentId = game_state.getCurrentPlayer().getPlayerId();
         std::cout << game_state.getCurrentPlayer().getName() << " melakukan REVERSE" << std::endl;
         std::cout << "Urutan eksekusi giliran ini : ";
         printQueue(game_state.getQueue());
         
+        Player currentPlayer = game_state.getPlayerById(currentId);
         reversE.consume();
+        game_state.nextTurn();
         std::cout << std::endl << "Urutan eksekusi giliran selanjutnya : ";
         printQueue(game_state.getQueue());
         std::cout << std::endl;
+
+        secondCommand(currentPlayer, game_state);
     }
     else {
         std::cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability REVERSE.";
     }
 }
 
+void GameIO::secondCommand(Player currentPlayer, GameState& game_state) {
+    std::cout << "Masukkan command anda: ";
+    std::string command;
+    std::cin >> command;
+    std::cout << std::endl;
+
+    while(std::find(commandList.begin(), commandList.end(), command) == commandList.end()) {
+        std::cout << "Command yang anda masukan invalid." << std::endl;
+        std::cout << "Masukkan kembali command anda: ";
+        std::cin >> command;
+        std::cout << std::endl;
+    }
+
+    if (command == "NEXT") {
+        std::cout << "Giliran dilanjut ke pemain selanjutnya" << std::endl;
+    }
+    else if (command == "DOUBLE") {
+        Double doublE(game_state);
+        long long int before = game_state.getPoint();
+        doublE.consume();
+        long long int after = game_state.getPoint();
+
+        std::cout << currentPlayer.getName() << "melakukan DOUBLE! Poin hadiah naik dari " << before << " menjadi " << after << "!" << std::endl;
+    }
+    else if (command == "HALF") {
+        Half half(game_state);
+        if (game_state.getPoint() > 1) {
+            long long int before = game_state.getPoint();
+            half.consume();
+            long long int after = game_state.getPoint();
+
+            std::cout << currentPlayer.getName() << "melakukan HALF! Poin hadiah turun dari " << before << " menjadi " << after << "!" << std::endl;
+        }
+        else {
+            std::cout << currentPlayer.getName() << "melakukan HALF! Sayangnya poin hadiah sudah bernilai 1. Poin hadiah tidak berubah.. Giliran dilanjut!" << std::endl;
+        }
+    }
+    else {
+        std::cout << "Oops, kartu abilitymu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << std::endl;
+        secondCommand(currentPlayer, game_state);
+    }
+}
+
 void GameIO::printQueue(std::vector<Player*> queue) {
-    /* int size = queue.size();
+    int size = queue.size();
     for (int i = 0; i < size; i++) {
-        Player *temp = queue.at(i);
-        std::cout << *temp.getName() << " ";
-    } */
+        Player temp = *(queue.at(i));
+        std::cout << temp.getName() << " ";
+    }
+    std::cout << std::endl;
 }
 
 void GameIO::swapCardIO(GameState& game_state) {
