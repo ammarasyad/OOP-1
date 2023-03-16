@@ -27,17 +27,17 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         explicit Player(PlayerInventory deck, std::string name);
 
 //-----------------------------------------------
-        PlayerInventory getInventory() const;
-        void setInventory(PlayerInventory);
+        PlayerInventory getInventory() const override;
+        void setInventory(PlayerInventory) override;
 
-        void addItem(PlayerCard);
-        void removeItem(PlayerCard);
+        void addItem(PlayerCard) override;
+        void removeItem(const PlayerCard&) override;
 
         void setAbilityCard(AbilityCard&);
         bool useAbilityCard(AbilityCard&);
         
-        PlayerCard getItemAt(int) const;
-        void reset();
+        PlayerCard getItemAt(const int&) const override;
+        void reset() override;
 //-----------------------------------------------
         int getPlayerId() const;
 

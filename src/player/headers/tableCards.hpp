@@ -11,15 +11,15 @@ class TableCards : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCa
         TableCards();
         TableCards(LimitedInventory<PlayerCard>);
 
-        LimitedInventory<PlayerCard> getInventory();
-        void setInventory(LimitedInventory<PlayerCard>);
+        LimitedInventory<PlayerCard> getInventory() const override;
+        void setInventory(LimitedInventory<PlayerCard>) override;
 
-        void addItem(PlayerCard);
-        void removeItem(PlayerCard);
+        void addItem(PlayerCard) override;
+        void removeItem(const PlayerCard&) override;
         
-        PlayerCard getItemAt(int);
+        PlayerCard getItemAt(const int&) const override;
 
-        void reset();
+        void reset() override;
 };
 
 #endif

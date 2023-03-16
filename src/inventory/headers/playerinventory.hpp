@@ -19,12 +19,12 @@ public:
     void setAbilityCard(AbilityCard&);
     void setAbilityUsed();
 
-    PlayerInventory& operator+=(PlayerCard& card) override;
-    PlayerInventory operator+(PlayerCard& card) const;
-    friend PlayerInventory operator+(PlayerCard&, PlayerInventory&);
-    PlayerInventory& operator-=(PlayerCard& card) override;
-    PlayerInventory operator-(PlayerCard& card) const;
-    friend PlayerInventory operator-(PlayerCard&, PlayerInventory&);
+    PlayerInventory& operator+=(const PlayerCard& card) override;
+    PlayerInventory operator+(const PlayerCard& card) const;
+    friend PlayerInventory operator+(const PlayerCard&, const PlayerInventory&);
+    PlayerInventory& operator-=(const PlayerCard& card) override;
+    PlayerInventory operator-(const PlayerCard& card) const;
+    friend PlayerInventory operator-(const PlayerCard&, const PlayerInventory&);
 
     PlayerInventory& operator=(PlayerInventory&);
 

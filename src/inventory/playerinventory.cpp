@@ -55,22 +55,22 @@ bool PlayerInventory::checkAbilityMatchAndUse(AbilityCard &card) {
     return false;
 }
 
-PlayerInventory &PlayerInventory::operator+=(PlayerCard &card) {
+PlayerInventory &PlayerInventory::operator+=(const PlayerCard &card) {
     LimitedInventory::operator+=(card);
     return *this;
 }
 
-PlayerInventory PlayerInventory::operator+(PlayerCard &card) const {
+PlayerInventory PlayerInventory::operator+(const PlayerCard &card) const {
     PlayerInventory temp(*this);
     return temp += card;
 }
 
-PlayerInventory &PlayerInventory::operator-=(PlayerCard &card) {
+PlayerInventory &PlayerInventory::operator-=(const PlayerCard &card) {
     LimitedInventory::operator-=(card);
     return *this;
 }
 
-PlayerInventory PlayerInventory::operator-(PlayerCard &card) const {
+PlayerInventory PlayerInventory::operator-(const PlayerCard &card) const {
     PlayerInventory temp(*this);
     return temp -= card;
 }

@@ -1,12 +1,14 @@
 #include "tableCards.hpp"
 
-TableCards::TableCards() {}
+TableCards::TableCards() {
+
+}
 
 TableCards::TableCards(LimitedInventory<PlayerCard> inventory) {
     inventory_ = inventory;
 }
 
-LimitedInventory<PlayerCard> TableCards::getInventory(){
+LimitedInventory<PlayerCard> TableCards::getInventory() const{
     return inventory_;
 }
 void TableCards::setInventory(LimitedInventory<PlayerCard> inventory){
@@ -16,11 +18,11 @@ void TableCards::setInventory(LimitedInventory<PlayerCard> inventory){
 void TableCards::addItem(PlayerCard card) {
     inventory_ = inventory_ + card;
 }
-void TableCards::removeItem(PlayerCard card) {
+void TableCards::removeItem(const PlayerCard& card) {
     inventory_ = inventory_ - card;
 }
         
-PlayerCard TableCards::getItemAt(int index) {
+PlayerCard TableCards::getItemAt(const int& index) const {
     return inventory_.at(index);
 }
 

@@ -6,15 +6,18 @@
 
 class DeckCard : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCard> {
     public:
-        virtual LimitedInventory<PlayerCard> getInventory();
-        virtual void setInventory(LimitedInventory<PlayerCard>);
+        DeckCard();
+        DeckCard(LimitedInventory<PlayerCard> inventory);
+        LimitedInventory<PlayerCard> getInventory() const override;
+        void setInventory(LimitedInventory<PlayerCard>) override;
 
-        virtual void addItem(PlayerCard);
-        virtual void removeItem(PlayerCard);
+        void addItem(PlayerCard) override;
+        void removeItem(const PlayerCard&) override;
         
-        virtual PlayerCard getItemAt(int);
+        PlayerCard getItemAt(const int&) const override;
+        PlayerCard drawACard();
 
-        virtual void reset();
+        void reset() override;
 };
 
 #endif
