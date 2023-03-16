@@ -2,11 +2,13 @@
 #include "generalexceptions.hpp"
 #include <bits/stdc++.h>
 
+int GameState::creationCount;
+
 GameState::GameState(std::vector<Player>& player_list)
         : playerList(player_list), gamePoint(0), round(0) {
     if (creationCount > 0) {
-        cout << "WARNING: This is not the first request of GameState creation. Please revisit the code if"
-            << " this code is not for testing" << endl;
+        std::cout << "WARNING: This is not the first request of GameState creation. Please revisit the code if"
+            << " this code is not for testing" << std::endl;
     }
     creationCount += 1;
 }
@@ -37,12 +39,28 @@ std::vector<Player*>& GameState::getQueue() {
     return queue;
 }
 
-void GameState::reverseQueue() {
-    std::reverse(currentStart, currentEnd);
-    --currentEnd;
+std::vector<Player*>::iterator &GameState::getStartIterator() {
+    return currentStart;
 }
 
-Player& GameState::nextTurn(char reverse) {
+void GameState::reverseQueue() {
+    auto temp = queue.begin();
+    while (temp != queue.end()) {
+        std::cout << (**temp).getPlayerId() << " ";
+        ++temp;
+    }
+    std::cout << std::endl;
+    std::reverse(currentStart+1, currentEnd);
+    std::reverse(queue.begin(), currentStart+1);
+    temp = queue.begin();
+    while (temp != queue.end()) {
+        std::cout << (**temp).getPlayerId() << " ";
+        ++temp;
+    }
+    std::cout << std::endl;
+}
+
+Player& GameState::nextTurn() {
     if (currentStart == currentEnd) {
         throw GameStateException((char*)"last player had taken the turn");
     }
@@ -50,23 +68,12 @@ Player& GameState::nextTurn(char reverse) {
         throw GameStateException((char*)"Exceeded round limit");
     }
 
-    if (reverse == 'y' || reverse == 'Y') {
-        reverseQueue();
-        return **(currentStart);
-    }
     Player *next_player = *(currentStart + 1);
-    if ((**currentStart).getPlayerId() == firstTurnId) {
-        Player *temp = *currentStart;
-        queue.erase(currentStart);
-        queue.push_back(temp);
-        next_player = *currentStart;
-
-    }
+    ++currentStart;
     // round ended
     if (currentStart == currentEnd) {
         endRound();
     }
-
     return *next_player;
 }
 
@@ -86,7 +93,9 @@ void GameState::endRound() {
     round += 1;
     currentStart = queue.begin();
     currentEnd = queue.end();
-    firstTurnId = (**currentStart).getPlayerId();
+    Player *queue_first = *(queue.begin());
+    queue.erase(queue.begin());
+    queue.push_back(queue_first);
 }
 
 void GameState::startGame() {
@@ -99,7 +108,6 @@ void GameState::startGame() {
             queue.push_back(&it);
         }
     }
-    firstTurnId = (*queue.front()).getPlayerId();
     currentStart = queue.begin();
     currentEnd = queue.end();
     round = 1;
@@ -122,6 +130,19 @@ void GameState::print() {
     }
     std::cout << std::endl;
 
+}
+
+std::vector<Player> &GameState::getPlayerList() {
+    return playerList;
+}
+
+std::vector<int> GameState::getNextTurnIds() {
+    std::vector<int> nextids;
+    for (auto it = queue.begin()+1; it != queue.end(); ++it) {
+        nextids.push_back((**it).getPlayerId());
+    }
+    nextids.push_back((**queue.begin()).getPlayerId());
+    return nextids;
 }
 
 

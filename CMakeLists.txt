@@ -30,7 +30,7 @@ add_executable(IF2210_Pemrograman_Berorientasi_Objek
         src/inventory/headers/inventory.hpp src/inventory/inventory.cpp
         src/inventory/headers/limitedinventory.hpp src/inventory/limitedinventory.cpp
         src/inventory/headers/playerinventory.hpp src/inventory/playerinventory.cpp
-        src/io/headers/gameio.hpp
+        src/io/headers/gameio.hpp src/io/gameio.cpp
         src/player/headers/inventoryHolder.hpp
         src/player/headers/player.hpp src/player/player.cpp
         src/player/headers/tableCards.hpp src/player/tableCards.cpp

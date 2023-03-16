@@ -18,11 +18,9 @@ class GameState {
         std::vector<Player*>::iterator currentStart;
         std::vector<Player*>::iterator currentEnd;
 
-        int firstTurnId;
         int round;
         long long int gamePoint;
 
-        inline void reverseQueue();
         void endRound();
 
         static int creationCount;
@@ -33,8 +31,11 @@ class GameState {
         long long int getPoint() const;
         int getRound() const;
         Player& getPlayerById(int);
+        std::vector<Player>& getPlayerList();
         Player& getCurrentPlayer();
         std::vector<Player*>& getQueue();
+        std::vector<Player*>::iterator& getStartIterator();
+        std::vector<int> getNextTurnIds();
 
         /*
          * char param is used to decide whether to reverse the queue (using the reverse ability) or not
@@ -42,7 +43,9 @@ class GameState {
          *
          * @return player current turn
          */
-        Player& nextTurn(char);
+        Player& nextTurn();
+
+        void reverseQueue();
         void multiplyPoint(int);
         void dividePoint(int);
 

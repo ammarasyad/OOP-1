@@ -20,6 +20,7 @@ class Ability {
 protected:
     GameState& state;
     explicit Ability(GameState& state);
+    explicit Ability(GameState&& state) = delete;
     int abilityCardId = 0;
 public:
     virtual void consume() = 0;
@@ -29,55 +30,64 @@ public:
 class ReRoll : public Ability {
 public:
     explicit ReRoll(GameState&);
+    explicit ReRoll(GameState&&) = delete;
     void consume() override;
 };
 
 class Double : public Ability {
 public:
     explicit Double(GameState&);
+    explicit Double(GameState&&) = delete;
     void consume() override;
 };
 
 class Quadruple : public Ability {
 public:
     explicit Quadruple(GameState&);
+    explicit Quadruple(GameState&&) = delete;
     void consume() override;
 };
 
 class Half : public Ability {
 public:
     explicit Half(GameState&);
+    explicit Half(GameState&&) = delete;
     void consume() override;
 };
 
 class Quarter : public Ability {
 public:
     explicit Quarter(GameState&);
+    explicit Quarter(GameState&&) = delete;
     void consume() override;
 };
 
 class Reverse : public Ability {
 public:
     explicit Reverse(GameState&);
+    explicit Reverse(GameState&&) = delete;
     void consume() override;
 };
 
 class SwapCard : public Ability {
 public:
     explicit SwapCard(GameState&);
-    void consume() override;
+    explicit SwapCard(GameState&&) = delete;
+    void consume(int , int , int , int);
 };
 
 class Switch : public Ability {
 public:
     explicit Switch(GameState&);
-    void consume() override;
+    explicit Switch(GameState&&) = delete;
+    void consume(int);
 };
 
 class Abilityless : public Ability {
 public:
     explicit Abilityless(GameState&);
-    void consume() override;
+    explicit Abilityless(GameState&&) = delete;
+    void consume(int);
 };
 
 #endif 
