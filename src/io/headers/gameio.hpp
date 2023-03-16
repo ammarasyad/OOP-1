@@ -12,6 +12,8 @@ class GameIO {
 
         void setAllPlayerName(GameState& game_state);
 
+        int restartGame();
+
         void printEndGame(GameState& game_state);
 
         void getCommand(GameState& game_state);

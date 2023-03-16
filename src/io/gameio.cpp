@@ -19,6 +19,23 @@ void GameIO::setAllPlayerName(GameState& game_state) {
     }
 }
 
+int GameIO::restartGame() {
+    std::cout << "Lanjut?" << std::endl;
+    std::cout << "1. Main lagi" << std::endl;
+    std::cout << "2. Exit" << std::endl;
+
+    int opt;
+    std::cin >> opt;
+    std::cout << std::endl;
+    while(opt != 1 || opt != 2) {
+        std::cout << "Masukkan invalid, pilih lagi" << std::endl;
+        std::cin >> opt;
+        std::cout << std::endl;
+    }
+
+    return opt;
+}
+
 void GameIO::printEndGame(GameState& game_state) {
     std::cout << "Permainan berakhir." << std::endl;
     std::cout << "Leaderboard:" << std::endl;
@@ -286,6 +303,10 @@ int GameIO::firstSwapTarget(Player player, std::vector<Player> player_list) {
 
     int target;
     std::cin >> target;
+    while (target < 1 || target > 6) {
+        std::cout << "Masukkan invalid, pilih lagi" << std::endl;
+        std::cin >> target;
+    }
 
     return target_list.at(target-1).second.getPlayerId();
 }
@@ -307,6 +328,10 @@ int GameIO::secondSwapTarget(Player player, int first_id, std::vector<Player> pl
 
     int target;
     std::cin >> target;
+    while (target < 1 || target > 5) {
+        std::cout << "Masukkan invalid, pilih lagi" << std::endl;
+        std::cin >> target;
+    }
 
     return target_list.at(target-1).second.getPlayerId();
 }
@@ -318,6 +343,10 @@ int GameIO::firstSwapCard(Player first_player) {
 
     int target;
     std::cin >> target;
+    while (target < 1 || target > 2) {
+        std::cout << "Masukkan invalid, pilih lagi" << std::endl;
+        std::cin >> target;
+    }
 
     return target; 
 }
@@ -329,6 +358,10 @@ int GameIO::secondSwapCard(Player second_player) {
 
     int target;
     std::cin >> target;
+    while (target < 1 || target > 2) {
+        std::cout << "Masukkan invalid, pilih lagi" << std::endl;
+        std::cin >> target;
+    }
 
     return target; 
 }
@@ -422,6 +455,10 @@ int GameIO::targetAbilityless(Player player, std::vector<Player> player_list) {
 
     int target;
     std::cin >> target;
+    while (target < 1 || target > 6) {
+        std::cout << "Masukkan invalid, pilih lagi" << std::endl;
+        std::cin >> target;
+    }
 
     return target_list.at(target-1).second.getPlayerId();
 }
