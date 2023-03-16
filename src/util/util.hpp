@@ -35,4 +35,15 @@ class Util{
             }
             return deck;
         }
+
+        template <class T>
+        static T max(std::vector<T> array) {
+            T maximum = array.at(0);
+            for(int i = 0; i < array.size(); i++){
+                maximum = array.at(i) > max ? array.at(i) : maximum;
+            }
+
+            return maximum;
+        }
+
 };
