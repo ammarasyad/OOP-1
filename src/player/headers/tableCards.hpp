@@ -14,7 +14,7 @@ class TableCards : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCa
         LimitedInventory<PlayerCard> getInventory() const override;
         void setInventory(LimitedInventory<PlayerCard>) override;
 
-        void addItem(PlayerCard) override;
+        void addItem(const PlayerCard&) override;
         void removeItem(const PlayerCard&) override;
         
         PlayerCard getItemAt(const int&) const override;

@@ -3,7 +3,6 @@
 
 
 #include <iostream>
-#include "limitedinventory.hpp"
 
 template <class T, class U>
 class InventoryHolder {
@@ -13,7 +12,7 @@ class InventoryHolder {
         virtual T getInventory() const = 0;
         virtual void setInventory(T) = 0;
 
-        virtual void addItem(U) = 0;
+        virtual void addItem(const U&) = 0;
         virtual void removeItem(const U&) = 0;
         
         virtual U getItemAt(const int&) const = 0;

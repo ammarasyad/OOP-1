@@ -15,7 +15,7 @@ void TableCards::setInventory(LimitedInventory<PlayerCard> inventory){
     inventory_ = inventory;
 }
 
-void TableCards::addItem(PlayerCard card) {
+void TableCards::addItem(const PlayerCard& card) {
     inventory_ = inventory_ + card;
 }
 void TableCards::removeItem(const PlayerCard& card) {

@@ -31,11 +31,11 @@ void Player::setInventory(PlayerInventory inventory){
     inventory_ = inventory;
 }
 
-void Player::addItem(PlayerCard card){
-    inventory_ = inventory_ + card;
+void Player::addItem(const PlayerCard& card){
+    inventory_  += card;
 }
 void Player::removeItem(const PlayerCard& card) {
-    inventory_ = inventory_ - card;
+    inventory_ -= card;
 }
 
 PlayerCard Player::getItemAt(const int& index) const{

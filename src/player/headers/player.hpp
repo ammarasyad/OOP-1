@@ -30,7 +30,7 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         PlayerInventory getInventory() const override;
         void setInventory(PlayerInventory) override;
 
-        void addItem(PlayerCard) override;
+        void addItem(const PlayerCard&) override;
         void removeItem(const PlayerCard&) override;
 
         void setAbilityCard(AbilityCard&);
