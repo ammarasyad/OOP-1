@@ -52,6 +52,7 @@ class GameState {
         DeckCard& getDeck();
         std::vector<Player*>::iterator& getStartIterator();
         std::vector<int> getNextTurnIds();
+        TableCards& getTableCard();
 
         Player& nextTurn();
 

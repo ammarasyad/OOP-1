@@ -18,6 +18,8 @@ class GameIO {
 
         void getCommand(GameState& game_state);
 
+        void printTableCard(GameState& game_state);
+
         void nextIO(GameState& game_state);
 
         void cantUseAbility();

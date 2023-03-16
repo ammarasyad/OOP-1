@@ -174,4 +174,6 @@ void GameState::addTableCard() {
     (*tableCards).addItem((*deck).drawACard());
 }
 
-
+TableCards& GameState::getTableCard() {
+    return *tableCards;
+}

@@ -49,8 +49,14 @@ void GameIO::printEndGame(GameState& game_state) {
 }
 
 void GameIO::getCommand(GameState& game_state) {
-    std::cout << "Kartu ";
+    std::cout << "Kartu di table saat ini :" << std::endl;
+    printTableCard(game_state);
     std::cout << "Saat ini adalah giliran " << game_state.getCurrentPlayer().getName() << std::endl;
+    PlayerCard firstCard = game_state.getCurrentPlayer().getItemAt(0);
+    PlayerCard secondCard = game_state.getCurrentPlayer().getItemAt(1);
+
+    std::cout << "Kartumu sekarang adalah :" << std::endl;
+    std::cout << firstCard.getNumber() << " (" << firstCard.getColor() << ") && " << secondCard.getNumber() << " (" << secondCard.getColor() << ")" << std::endl;
     std::cout << "Masukkan command anda: ";
     std::string command;
     std::cin >> command;
@@ -104,6 +110,15 @@ void GameIO::getCommand(GameState& game_state) {
                 abilitylessIO(game_state);
             }
         }
+    }
+}
+
+void GameIO::printTableCard(GameState& game_state)  {
+    TableCards table = game_state.getTableCard();
+    int tableSize = table.getInventory().getDeckSize();
+
+    for (int i = 0; i < tableSize; i++) {
+        std::cout << i+1 << ". " << table.getItemAt(i).getNumber() << "(" << table.getItemAt(i).getColor() << ")" << std::endl;
     }
 }
 
