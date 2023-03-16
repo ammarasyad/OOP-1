@@ -13,7 +13,7 @@ class Inventory {
         int deckSize;
     public:
         Inventory();
-        virtual ~Inventory();
+        virtual ~Inventory() = default;
 
         virtual void addToDeck(T&);
         T& at(int) const;
@@ -68,8 +68,6 @@ void Inventory<T>::clear(){
     deck.clear();
     deckSize = 0;
 }
-
-#include <iostream>
 
 template<class T>
 void

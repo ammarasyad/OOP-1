@@ -37,12 +37,6 @@ class GameState {
         std::vector<Player*>::iterator& getStartIterator();
         std::vector<int> getNextTurnIds();
 
-        /*
-         * char param is used to decide whether to reverse the queue (using the reverse ability) or not
-         * value y or Y will reverse the queue, else keep the order
-         *
-         * @return player current turn
-         */
         Player& nextTurn();
 
         void reverseQueue();
