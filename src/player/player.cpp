@@ -3,7 +3,7 @@
 
 int Player::PLAYER_AMOUNT = 0;
 
-Player::Player() : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), handScore_(-1), point_(0) {
+Player::Player() : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), point_(0) {
     PLAYER_AMOUNT++;
 }
 
@@ -11,7 +11,7 @@ Player::Player(std::string name) : Player() {
     name_ = name;
 }
 
-Player::Player(PlayerInventory inventory) : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), handScore_(-1), point_(0) {
+Player::Player(PlayerInventory inventory) : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), point_(0) {
     inventory_ = inventory;
     PLAYER_AMOUNT++;
     //for loop find highest color
@@ -45,7 +45,6 @@ PlayerCard Player::getItemAt(const int& index) const{
 void Player::reset(){
     inventory_.resetPlayer();
     point_ = 0;
-    handScore_ = .0f;
     usedCommand_ = false;
     abilityLess_ = false;
 }
@@ -57,13 +56,6 @@ void Player::setAbilityCard(const AbilityCard& abilityCard) {
 
 bool Player::useAbilityCard(const AbilityCard& abilityCard){
     return inventory_.checkAbilityMatchAndUse(abilityCard);
-}
-
-float Player::getHandScore() const{
-    return handScore_;
-}
-void Player::setHandScore(float handScore){
-    handScore_ = handScore;
 }
 
 bool Player::haveUsedCommand() const{
@@ -109,74 +101,22 @@ std::string Player::getName() const {
 
 //operator
 bool Player::operator<(const Player& other) const{
-    if(handScore_ < 0) {
-        throw PlayerException("Player hand combination score unknown.");
+    if(point_ < other.point_){
+        return true;
     } else {
-
-    }
-
-    if(handScore_ == other.handScore_){
-        int thisColorPriority = 1 * GREEN;
-        int otherColorPriority = 1 * GREEN;
-
-        for(int i = 0; i < inventory_.getDeckSize(); i++){
-            int tempColor = inventory_.at(i).getColor() * inventory_.at(i).getNumber();
-            thisColorPriority = tempColor > thisColorPriority ? tempColor : thisColorPriority;
-        }
-
-        for(int i = 0; i < other.inventory_.getDeckSize(); i++){
-            int tempColor = other.inventory_.at(i).getColor() * other.inventory_.at(i).getNumber();
-            otherColorPriority = tempColor > otherColorPriority ? tempColor : otherColorPriority;
-        }
-
-        if(thisColorPriority < otherColorPriority){
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        if(handScore_ < other.handScore_){
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 }
 bool Player::operator>(const Player& other) const{
-    if(handScore_ < 0) {
-        throw PlayerException("Player hand combination score unknown.");
-    }
-
-    if(handScore_ == other.handScore_){
-        int thisColorPriority = 1 * GREEN;
-        int otherColorPriority = 1 * GREEN;
-
-        for(int i = 0; i < inventory_.getDeckSize(); i++){
-            int tempColor = inventory_.at(i).getColor() * inventory_.at(i).getNumber();
-            thisColorPriority = tempColor > thisColorPriority ? tempColor : thisColorPriority;
-        }
-
-        for(int i = 0; i < other.inventory_.getDeckSize(); i++){
-            int tempColor = other.inventory_.at(i).getColor() * other.inventory_.at(i).getNumber();
-            otherColorPriority = tempColor > otherColorPriority ? tempColor : otherColorPriority;
-        }
-
-        if(thisColorPriority > otherColorPriority){
-            return true;
-        } else {
-            return false;
-        }
+    if(point_ > other.point_){
+        return true;
     } else {
-        if(handScore_ > other.handScore_){
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 }
 
 bool Player::operator==(const Player& other) const{
-    return handScore_ == other.handScore_ && inventory_ == other.inventory_;
+    return point_ == other.point_;
     // for(int i = 0; i < inventory_)
     //need sort
 

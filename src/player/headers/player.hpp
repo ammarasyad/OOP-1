@@ -14,8 +14,6 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         static int PLAYER_AMOUNT;
         const int playerId_;
         int point_;
-
-        float handScore_;
         
         bool usedCommand_;
         bool abilityLess_;
@@ -44,9 +42,6 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         int getPoint() const;
         void setPoint(int);
         void addPoint(int);
-
-        float getHandScore() const;
-        void setHandScore(float);
 
         bool haveUsedCommand() const;
         void canUseCommand();
