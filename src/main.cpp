@@ -38,7 +38,6 @@ int main() {
         Player p;
         for (int i = 0; i< 7; ++i) {
             if (maxC == combinations.at(i)) {
-                s.getPlayerById(i).setPoint(s.getPlayerById(i)+s.getPoint());
             }
         }
     }
