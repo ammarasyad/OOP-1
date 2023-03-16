@@ -55,6 +55,10 @@ bool PlayerInventory::checkAbilityMatchAndUse(const AbilityCard &card) {
     return false;
 }
 
+AbilityCard PlayerInventory::getAbilityCard() {
+    return *abilityCard;
+}
+
 PlayerInventory &PlayerInventory::operator+=(const PlayerCard &card) {
     LimitedInventory::operator+=(card);
     return *this;

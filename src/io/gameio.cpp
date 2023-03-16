@@ -57,6 +57,10 @@ void GameIO::getCommand(GameState& game_state) {
 
     std::cout << "Kartumu sekarang adalah :" << std::endl;
     std::cout << firstCard.getNumber() << " (" << firstCard.getColor() << ") && " << secondCard.getNumber() << " (" << secondCard.getColor() << ")" << std::endl;
+    if (game_state.getCurrentPlayer().getInventory().isAbilityAvailable()) {
+        std::cout << "Kartu abilitymu adalah : ";
+        game_state.getCurrentPlayer().getInventory().getAbilityCard().print();
+    }
     std::cout << "Masukkan command anda: ";
     std::string command;
     std::cin >> command;

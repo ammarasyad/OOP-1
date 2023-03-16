@@ -23,6 +23,7 @@ public:
     bool checkAbilityMatchAndUse(const AbilityCard &card);
     void setAbilityCard(const AbilityCard&);
     void setAbilityUsed();
+    AbilityCard getAbilityCard();
 
     PlayerInventory& operator+=(const PlayerCard& card) override;
     PlayerInventory operator+(const PlayerCard& card) const;
