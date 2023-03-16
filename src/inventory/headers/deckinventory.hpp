@@ -8,9 +8,9 @@
 
 class DeckInventory: public LimitedInventory<PlayerCard> {
 private:
-    int limit;
 public:
     DeckInventory();
+    DeckInventory(int limit);
     void shuffle();
 
     DeckInventory operator+(const PlayerCard& card) const;

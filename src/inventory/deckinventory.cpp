@@ -1,6 +1,10 @@
 #include "deckinventory.hpp"
 
-DeckInventory::DeckInventory(): LimitedInventory(15) {
+DeckInventory::DeckInventory(): LimitedInventory(52) {
+
+}
+
+DeckInventory::DeckInventory(int limit): LimitedInventory(limit) {
 
 }
 
