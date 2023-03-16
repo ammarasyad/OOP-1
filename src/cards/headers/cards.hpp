@@ -3,7 +3,7 @@
 
 #include <string>
 #include "hand.hpp"
-#include "ability.hpp"
+//#include "ability.hpp"
 
 class Ability;
 enum AbilityIds {

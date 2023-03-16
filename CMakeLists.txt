@@ -19,6 +19,7 @@ include_directories(src/player)
 include_directories(src/player/headers)
 include_directories(src/exceptions)
 include_directories(src/exceptions/headers)
+include_directories(src/util)
 
 add_executable(IF2210_Pemrograman_Berorientasi_Objek
         src/ability/headers/ability.hpp src/ability/ability.cpp
@@ -36,4 +37,5 @@ add_executable(IF2210_Pemrograman_Berorientasi_Objek
         src/player/headers/tableCards.hpp src/player/tableCards.cpp
         src/main.cpp src/random.hpp src/io/gameio.cpp src/inventory/headers/deckinventory.hpp
         src/inventory/deckinventory.cpp
-        src/player/headers/deckCard.hpp src/player/deckCard.cpp)
+        src/player/headers/deckCard.hpp src/player/deckCard.cpp
+        src/util/util.hpp)

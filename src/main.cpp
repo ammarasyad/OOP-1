@@ -17,6 +17,11 @@ int main() {
     GameIO gameIo;
     GameState s(playerList);
     s.startGame();
-    gameIo.startGame(s);
+
+    while(!s.isFinish()) {
+        gameIo.startGame(s);
+        gameIo.setAllPlayerName(s);
+        gameIo.getCommand(s);
+    }
 
 }

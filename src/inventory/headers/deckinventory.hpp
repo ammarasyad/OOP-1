@@ -1,12 +1,12 @@
 #ifndef DECK_INVEN_HPP
 #define DECK_INVEN_HPP
 
+//class PlayerCard;
 #include "cards.hpp"
+class PlayerCard;
 #include "limitedinventory.hpp"
 #include <algorithm>
 #include <random>
-
-//class PlayerCard;
 
 class DeckInventory: public LimitedInventory<PlayerCard> {
 private:

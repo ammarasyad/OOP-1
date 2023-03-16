@@ -2,6 +2,7 @@
 #include "cards.hpp"
 #include "hand.hpp"
 #include "generalexceptions.hpp"
+#include "ability.hpp"
 
 /** Player Card **/
 

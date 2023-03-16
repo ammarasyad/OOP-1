@@ -5,7 +5,7 @@
 #include "inventoryHolder.hpp"
 #include "deckinventory.hpp"
 
-class PlayerCard;
+//class PlayerCard;
 class DeckInventory;
 template <class T, class U>
 class InventoryHolder;

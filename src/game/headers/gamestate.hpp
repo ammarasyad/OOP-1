@@ -3,7 +3,9 @@
 
 class Player;
 class DeckInventory;
+//class PlayerCard;
 
+#include "util.hpp"
 #include <vector>
 #include "player.hpp"
 #include "deckCard.hpp"
@@ -55,6 +57,7 @@ class GameState {
 
         void startGame();
         void restartGame();
+        bool isFinish();
         // print is for debugging purposes only !!!
         void print();
 };

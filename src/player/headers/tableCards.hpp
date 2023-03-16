@@ -3,6 +3,7 @@
 
 #include "limitedinventory.hpp"
 #include "cards.hpp"
+#include "inventoryHolder.hpp"
 
 class PlayerCard;
 template <class T>

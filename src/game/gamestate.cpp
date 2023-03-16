@@ -1,6 +1,7 @@
 #include "gamestate.hpp"
 #include "generalexceptions.hpp"
 #include <bits/stdc++.h>
+#include <cmath>
 
 int GameState::creationCount;
 
@@ -32,8 +33,8 @@ int GameState::getRound() const {
 }
 
 Player& GameState::getPlayerById(int player_id) {
-    if (player_id > 7 || player_id <= 0) {
-        throw GameStateException((char*)"player id does not exist");
+    if (player_id > 7 || player_id < 0) {
+        throw GameStateException("player id does not exist");
     }
     return playerList.at(player_id);
 }
@@ -128,7 +129,10 @@ void GameState::restartGame() {
     round = 1;
     for (auto &it: playerList) {
         // reset all players' inventory
+        (*(&it)).reset();
     }
+    deck->reset();
+
 }
 
 void GameState::print() {
@@ -157,6 +161,11 @@ std::vector<int> GameState::getNextTurnIds() {
 
 DeckCard& GameState::getDeck() {
     return *deck;
+}
+
+bool GameState::isFinish() {
+    Player temp = Util::max<Player>(playerList);
+    return temp.getPoint() >= pow(2,32);
 }
 
 

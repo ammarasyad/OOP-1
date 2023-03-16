@@ -44,6 +44,8 @@ class Player : public InventoryHolder<PlayerInventory, PlayerCard> {
         
         PlayerCard getItemAt(const int&);
         void reset();
+
+        void resetHand();
 //-----------------------------------------------
         int getPlayerId() const;
 
@@ -62,6 +64,8 @@ class Player : public InventoryHolder<PlayerInventory, PlayerCard> {
         std::string getName() const;
 
         //operator
+        Player& operator=(const Player&);
+
         bool operator<(const Player&) const;
         bool operator>(const Player&) const;
         bool operator==(const Player&) const;

@@ -49,6 +49,12 @@ void Player::reset(){
     abilityLess_ = false;
 }
 
+void Player::resetHand(){
+    inventory_->resetPlayer();
+    usedCommand_ = false;
+    abilityLess_ = false;
+}
+
 void Player::setAbilityCard(const AbilityCard& abilityCard) {
     inventory_->setAbilityCard(abilityCard);
 }
@@ -100,6 +106,15 @@ std::string Player::getName() const {
 }
 
 //operator
+Player& Player::operator=(const Player& other){
+    name_ = other.name_;
+    point_ = other.point_;
+    usedCommand_ = other.usedCommand_;
+    abilityLess_ = other.abilityLess_;
+
+    return *this;
+}
+
 bool Player::operator<(const Player& other) const{
     if(point_ < other.point_){
         return true;
@@ -116,7 +131,7 @@ bool Player::operator>(const Player& other) const{
 }
 
 bool Player::operator==(const Player& other) const{
-    return point_ == other.point_;
+    return point_ == other.point_ && name_ == other.name_ && usedCommand_ == other.usedCommand_ && abilityLess_ == other.abilityLess_;
     // for(int i = 0; i < inventory_)
     //need sort
 
