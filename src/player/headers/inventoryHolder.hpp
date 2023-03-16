@@ -19,6 +19,10 @@ class InventoryHolder {
         virtual U getItemAt(const int&) = 0;
 
         virtual void reset() = 0;
+
+        virtual ~InventoryHolder() {
+            delete inventory_;
+        }
 };
 
 

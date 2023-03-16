@@ -1,7 +1,7 @@
 #include "tableCards.hpp"
 
 TableCards::TableCards() {
-
+    inventory_ = new LimitedInventory<PlayerCard>(5);
 }
 
 TableCards::TableCards(LimitedInventory<PlayerCard> inventory) {
