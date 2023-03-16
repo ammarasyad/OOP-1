@@ -10,6 +10,10 @@ class GameIO {
     public:
         void startGame(GameState &gameState);
 
+        void setAllPlayerName(GameState& game_state);
+
+        void printEndGame(GameState& game_state);
+
         void getCommand(GameState& game_state);
 
         void nextIO(GameState& game_state);

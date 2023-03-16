@@ -9,6 +9,29 @@ void GameIO::startGame(GameState &gameState) {
     getCommand(gameState);
 }
 
+void GameIO::setAllPlayerName(GameState& game_state) {
+    std::string temp;
+    for (int i = 0; i < 7; i++) {
+        std::cout << "Masukkan nama pemain " << i+1 << ": ";
+        std::cin >> temp;
+        std::cout << std::endl;
+
+        game_state.getPlayerById(i).setName(temp);
+    }
+}
+
+void GameIO::printEndGame(GameState& game_state) {
+    std::cout << "Permainan berakhir." << std::endl;
+    std::cout << "Leaderboard:" << std::endl;
+    std::vector<Player> leaderboard = game_state.getPlayerList();
+
+    for (int i = 0; i < 7; i++) {
+        std::cout << i+1 << ". " << leaderboard.at(i).getName() << ": " << leaderboard.at(i).getPoint() << std::endl;
+    }
+
+    std::cout << "Permainan dimenangkan oleh " << leaderboard.at(0).getName() << std::endl;
+}
+
 void GameIO::getCommand(GameState& game_state) {
     std::cout << "Masukkan command anda: ";
     std::string command;

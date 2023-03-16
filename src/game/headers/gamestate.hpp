@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "player.hpp"
+#include "deckCard.hpp"
 
 class GameState {
     /*
@@ -17,6 +18,8 @@ class GameState {
 
         std::vector<Player*>::iterator currentStart;
         std::vector<Player*>::iterator currentEnd;
+
+        DeckCard deck;
 
         int round;
         long long int gamePoint;
@@ -34,6 +37,7 @@ class GameState {
         std::vector<Player>& getPlayerList();
         Player& getCurrentPlayer();
         std::vector<Player*>& getQueue();
+        DeckCard& getDeck();
         std::vector<Player*>::iterator& getStartIterator();
         std::vector<int> getNextTurnIds();
 

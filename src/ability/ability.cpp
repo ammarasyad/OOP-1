@@ -23,8 +23,11 @@ void ReRoll::consume() {
     current.removeItem(firstCard);
     current.removeItem(secondCard);
 
-    current.addItem(firstCard);
-    current.addItem(secondCard);    
+    PlayerCard newFirstCard = state.getDeck().drawACard();
+    PlayerCard newSecondCard = state.getDeck().drawACard();
+
+    current.addItem(newFirstCard);
+    current.addItem(newSecondCard);    
 }
 
 Double::Double(GameState& state) : Ability(state) {
