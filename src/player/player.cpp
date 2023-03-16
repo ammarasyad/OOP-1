@@ -50,12 +50,12 @@ void Player::reset(){
     abilityLess_ = false;
 }
 
-void Player::setAbilityCard(AbilityCard& abilityCard) {
+void Player::setAbilityCard(const AbilityCard& abilityCard) {
     inventory_.setAbilityCard(abilityCard);
 }
 
 
-bool Player::useAbilityCard(AbilityCard& abilityCard){
+bool Player::useAbilityCard(const AbilityCard& abilityCard){
     return inventory_.checkAbilityMatchAndUse(abilityCard);
 }
 

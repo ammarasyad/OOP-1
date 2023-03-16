@@ -14,9 +14,9 @@ public:
     ~PlayerInventory();
 
     bool isAbilityAvailable() const;
-    bool isAbilityMatch(AbilityCard &card);
-    bool checkAbilityMatchAndUse(AbilityCard &card);
-    void setAbilityCard(AbilityCard&);
+    bool isAbilityMatch(const AbilityCard &card);
+    bool checkAbilityMatchAndUse(const AbilityCard &card);
+    void setAbilityCard(const AbilityCard&);
     void setAbilityUsed();
 
     PlayerInventory& operator+=(const PlayerCard& card) override;

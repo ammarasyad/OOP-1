@@ -9,7 +9,7 @@ bool PlayerInventory::isAbilityAvailable() const {
     return abilityAvailable;
 }
 
-void PlayerInventory::setAbilityCard(AbilityCard &card) {
+void PlayerInventory::setAbilityCard(const AbilityCard &card) {
     abilityCard = new AbilityCard(card);
     abilityAvailable = true;
 }
@@ -40,14 +40,14 @@ void PlayerInventory::resetPlayer() {
     abilityCard = nullptr;
 }
 
-bool PlayerInventory::isAbilityMatch(AbilityCard &card) {
+bool PlayerInventory::isAbilityMatch(const AbilityCard &card) {
     if (abilityAvailable && card.getId()==this->abilityCard->getId()) {
         return true;
     }
     return false;
 }
 
-bool PlayerInventory::checkAbilityMatchAndUse(AbilityCard &card) {
+bool PlayerInventory::checkAbilityMatchAndUse(const AbilityCard &card) {
     if (this->isAbilityMatch(card)) {
         abilityAvailable = false;
         return true;

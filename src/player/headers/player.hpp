@@ -33,8 +33,8 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
         void addItem(const PlayerCard&) override;
         void removeItem(const PlayerCard&) override;
 
-        void setAbilityCard(AbilityCard&);
-        bool useAbilityCard(AbilityCard&);
+        void setAbilityCard(const AbilityCard&);
+        bool useAbilityCard(const AbilityCard&);
         
         PlayerCard getItemAt(const int&) const override;
         void reset() override;

@@ -47,7 +47,7 @@ void GameIO::doubleIO(GameState& game_state) {
 
 void GameIO::quadrupleIO(GameState& game_state) {
     Quadruple quadruple(game_state);
-    if (game_state.getCurrentPlayer().useAbilityCard(quadruple)) {
+    if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(quadruple))) {
         long long int before = game_state.getPoint();
         quadruple.consume();
         long long int after = game_state.getPoint();
