@@ -4,8 +4,8 @@
 
 std::vector<std::string> commandList = {"NEXT", "DOUBLE", "HALF", "RE-ROLL", "QUADRUPLE", "QUARTER", "REVERSE", "SWAPCARD", "SWITCH", "ABILITYLESS"};
 
-void GameIO::startGame(GameState &gameState) {
-    std::cout << "selamat di game kontolity" << std::endl;
+void GameIO::startGame() {
+    std::cout << "selamat datang di platform game judi halal kami" << std::endl;
 }
 
 void GameIO::setAllPlayerName(GameState& game_state) {
@@ -49,6 +49,8 @@ void GameIO::printEndGame(GameState& game_state) {
 }
 
 void GameIO::getCommand(GameState& game_state) {
+    std::cout << "Kartu ";
+    std::cout << "Saat ini adalah giliran " << game_state.getCurrentPlayer().getName() << std::endl;
     std::cout << "Masukkan command anda: ";
     std::string command;
     std::cin >> command;

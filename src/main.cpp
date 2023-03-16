@@ -18,9 +18,10 @@ int main() {
     GameState s(playerList);
     s.startGame();
 
+    gameIo.startGame();
+    gameIo.setAllPlayerName(s);
+
     while(!s.isFinish()) {
-        gameIo.startGame(s);
-        gameIo.setAllPlayerName(s);
         gameIo.getCommand(s);
     }
 

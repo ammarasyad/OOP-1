@@ -8,7 +8,7 @@
 
 class GameIO {
     public:
-        void startGame(GameState &gameState);
+        void startGame();
 
         void setAllPlayerName(GameState& game_state);
 

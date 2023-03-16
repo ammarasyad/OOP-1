@@ -3,12 +3,14 @@
 
 class Player;
 class DeckInventory;
+class TableCards;
 //class PlayerCard;
 
 #include "util.hpp"
 #include <vector>
 #include "player.hpp"
 #include "deckCard.hpp"
+#include "tableCards.hpp"
 
 
 
@@ -27,6 +29,8 @@ class GameState {
         std::vector<Player*>::iterator currentEnd;
 
         DeckCard* deck;
+
+        TableCards* tableCards;
 
         int round;
         long long int gamePoint;
@@ -50,6 +54,8 @@ class GameState {
         std::vector<int> getNextTurnIds();
 
         Player& nextTurn();
+
+        void addTableCard();
 
         void reverseQueue();
         void multiplyPoint(int);

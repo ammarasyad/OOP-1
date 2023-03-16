@@ -6,7 +6,7 @@
 int GameState::creationCount;
 
 GameState::GameState(std::vector<Player>& player_list)
-        : playerList(player_list), gamePoint(0), round(0), deck(new DeckCard()){
+        : playerList(player_list), gamePoint(0), round(0), deck(new DeckCard()), tableCards(new TableCards()){
     if (creationCount > 0) {
         std::cout << "WARNING: This is not the first request of GameState creation. Please revisit the code if"
             << " this code is not for testing" << std::endl;
@@ -16,7 +16,7 @@ GameState::GameState(std::vector<Player>& player_list)
 }
 
 GameState::GameState(std::vector<Player>& player_list, DeckInventory& deck_)
-        : playerList(player_list), gamePoint(0), round(0), deck(new DeckCard(deck_)) {
+        : playerList(player_list), gamePoint(0), round(0), deck(new DeckCard(deck_)) , tableCards(new TableCards()){
     if (creationCount > 0) {
         std::cout << "WARNING: This is not the first request of GameState creation. Please revisit the code if"
             << " this code is not for testing" << std::endl;
@@ -83,6 +83,7 @@ Player& GameState::nextTurn() {
     ++currentStart;
     // round ended
     if (currentStart == currentEnd) {
+        addTableCard();
         endRound();
     }
     return *next_player;
@@ -129,9 +130,10 @@ void GameState::restartGame() {
     round = 1;
     for (auto &it: playerList) {
         // reset all players' inventory
-        (*(&it)).reset();
+        (*(&it)).resetHand();
     }
     deck->reset();
+    tableCards->reset();
 
 }
 
@@ -166,6 +168,10 @@ DeckCard& GameState::getDeck() {
 bool GameState::isFinish() {
     Player temp = Util::max<Player>(playerList);
     return temp.getPoint() >= pow(2,32);
+}
+
+void GameState::addTableCard() {
+    (*tableCards).addItem((*deck).drawACard());
 }
 
 
