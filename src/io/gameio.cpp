@@ -2,6 +2,8 @@
 #include <utility>
 #include <iostream>
 
+std::vector<std::string> commandList = {"NEXT", "DOUBLE", "HALF", "RE-ROLL", "QUADRUPLE", "QUARTER", "REVERSE", "SWAPCARD", "SWITCH", "ABILITYLESS"};
+
 void GameIO::startGame(GameState &gameState) {
     std::cout << "selamat di game kontolity" << std::endl;
     getCommand(gameState);
@@ -12,6 +14,49 @@ void GameIO::getCommand(GameState& game_state) {
     std::string command;
     std::cin >> command;
 
+    while(std::find(commandList.begin(), commandList.end(), command) == commandList.end()) {
+        std::cout << "Command yang anda masukan invalid." << std::endl;
+        std::cout << "Masukkan kembali command anda: ";
+        std::cin >> command;
+    }
+
+    if (command == "NEXT") {
+        nextIO(game_state);
+    }
+    else if (command == "DOUBLE") {
+        doubleIO(game_state);
+    }
+    else if (command == "HALF") {
+        doubleIO(game_state);
+    }
+    else {
+        if (game_state.getCurrentPlayer().isAbilityLess()) {
+            std::cout << "Oops, kartu abilitymu telah dimatikan sebelumnya:(. Silahkan lakukan perintah lain." << std::endl;
+        }
+        else {
+            if (command == "RE-ROLL") {
+                reRollIO(game_state);
+            }
+            else if (command == "QUADRUPLE") {
+                quadrupleIO(game_state);
+            }
+            else if (command == "QUARTER") {
+                quarterIO(game_state);
+            }
+            else if (command == "REVERSE") {
+                reverseIO(game_state);
+            }
+            else if (command == "SWAPCARD") {
+                swapCardIO(game_state);
+            }
+            else if (command == "SWITCH") {
+                switchIO(game_state);
+            }
+            else {
+                abilitylessIO(game_state);
+            }
+        }
+    }
 }
 
 void GameIO::nextIO(GameState& game_state) {
@@ -35,6 +80,7 @@ void GameIO::reRollIO(GameState& game_state) {
         PlayerCard secondCard = current.getItemAt(1);
         std::cout << "1. " << firstCard.getNumber() << " " << firstCard.getColor() << std::endl;
         std::cout << "2. " << secondCard.getNumber() << " " << secondCard.getColor() << std::endl;
+        game_state.nextTurn();
     }
     else {
         std::cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability REROLL." << std::endl;
@@ -48,6 +94,7 @@ void GameIO::doubleIO(GameState& game_state) {
     long long int after = game_state.getPoint();
 
     std::cout << game_state.getCurrentPlayer().getName() << "melakukan DOUBLE! Poin hadiah naik dari " << before << " menjadi " << after << "!" << std::endl;
+    game_state.nextTurn();
 }
 
 void GameIO::quadrupleIO(GameState& game_state) {
@@ -58,6 +105,7 @@ void GameIO::quadrupleIO(GameState& game_state) {
         long long int after = game_state.getPoint();
 
         std::cout << game_state.getCurrentPlayer().getName() << "melakukan QUADRUPLE! Poin hadiah naik dari " << before << " menjadi " << after << "!" << std::endl;
+        game_state.nextTurn();
     }
     else {
         std::cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability QUADRUPLE." << std::endl;
@@ -72,9 +120,11 @@ void GameIO::halfIO(GameState& game_state) {
         long long int after = game_state.getPoint();
 
         std::cout << game_state.getCurrentPlayer().getName() << "melakukan HALF! Poin hadiah turun dari " << before << " menjadi " << after << "!" << std::endl;
+        game_state.nextTurn();
     }
     else {
         std::cout << game_state.getCurrentPlayer().getName() << "melakukan HALF! Sayangnya poin hadiah sudah bernilai 1. Poin hadiah tidak berubah.. Giliran dilanjut!" << std::endl;
+        game_state.nextTurn();
     }
 }
 
@@ -87,9 +137,11 @@ void GameIO::quarterIO(GameState& game_state) {
             long long int after = game_state.getPoint();
 
             std::cout << game_state.getCurrentPlayer().getName() << "melakukan QUARTER! Poin hadiah turun dari " << before << " menjadi " << after << "!" << std::endl;
+            game_state.nextTurn();
         }
         else {
             std::cout << game_state.getCurrentPlayer().getName() << "melakukan QUARTER! Sayangnya poin hadiah sudah tidak bisa berubah. Poin hadiah tidak berubah.. Giliran dilanjut!" << std::endl;
+            game_state.nextTurn();
         }
     }
     else {
@@ -103,7 +155,7 @@ void GameIO::reverseIO(GameState& game_state) {
         std::cout << game_state.getCurrentPlayer().getName() << " melakukan REVERSE" << std::endl;
         std::cout << "Urutan eksekusi giliran ini : ";
         printQueue(game_state.getQueue());
-
+        
         reversE.consume();
         std::cout << std::endl << "Urutan eksekusi giliran selanjutnya : ";
         printQueue(game_state.getQueue());
@@ -135,6 +187,7 @@ void GameIO::swapCardIO(GameState& game_state) {
 
         swapcard.setTarget(firstTargetId, secondTargetId, firstCard-1, secondCard-1);
         swapcard.consume();
+        game_state.nextTurn();
     }
     else {
         std::cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability SWAPCARD." << std::endl;
@@ -227,7 +280,8 @@ void GameIO::switchIO(GameState& game_state) {
         secondCard = game_state.getCurrentPlayer().getItemAt(1);
 
         std::cout << "Kartumu sekarang adalah :" << std::endl;
-        std::cout << firstCard.getNumber() << " (" << firstCard.getColor() << ") && " << secondCard.getNumber() << " (" << secondCard.getColor() << ")" << std::endl;   
+        std::cout << firstCard.getNumber() << " (" << firstCard.getColor() << ") && " << secondCard.getNumber() << " (" << secondCard.getColor() << ")" << std::endl;
+        game_state.nextTurn();   
     }
     else {
         std::cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability SWITCH.";
@@ -237,20 +291,41 @@ void GameIO::switchIO(GameState& game_state) {
 void GameIO::abilitylessIO(GameState& game_state) {
     Abilityless abilityless(game_state);
     if (game_state.getCurrentPlayer().useAbilityCard(AbilityCard(abilityless))) {
-        int targetId = targetAbilityless(game_state.getCurrentPlayer(), game_state.getPlayerList());
-    } 
+        int targetId;
+        if (checkNoAbilty(game_state.getCurrentPlayer(), game_state.getPlayerList())) {
+            std::cout << "Eits, ternyata semua pemain sudah memakai kartu kemampuan. Yah kamu kena sendiri deh, kemampuanmu menjadi abilityless. Yah, pengunaan kartu ini sia-sia" << std::endl;
+            targetId = game_state.getCurrentPlayer().getPlayerId();
+        }
+        else {
+            targetId = targetAbilityless(game_state.getCurrentPlayer(), game_state.getPlayerList());
+
+            if (game_state.getPlayerById(targetId).getInventory().isAbilityAvailable()) {
+                std::cout << "Kartu ability " << game_state.getPlayerById(targetId).getName() << " telah dimatikan" << std::endl;
+            }
+            else {
+                std::cout << "Kartu ability " << game_state.getPlayerById(targetId).getName() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia" << std::endl;
+            }
+        }
+        abilityless.setTarget(targetId);
+        abilityless.consume();
+        game_state.nextTurn();        
+    }  
     else {
         std::cout << "Ets, tidak bisa. Kamu tidak punya kartu Ability ABILITYLESS.";
     }
 }
 
 bool GameIO::checkNoAbilty(Player player, std::vector<Player> player_list) {
-    /* bool noOne = true;
+    bool noOne = true;
     for (int i = 0; i < 7; i++) {
         if (player_list.at(i).getPlayerId() != player.getPlayerId()) {
-
+            if (player_list.at(i).getInventory().isAbilityAvailable()) {
+                noOne = false;
+                break;
+            }
         } 
-    } */
+    }
+    return noOne;
 }
 
 int GameIO::targetAbilityless(Player player, std::vector<Player> player_list) {
