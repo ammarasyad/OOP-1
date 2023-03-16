@@ -1,6 +1,7 @@
 #include "gameio.hpp"
 #include "gamestate.hpp"
 #include "gamestatefactory.hpp"
+#include "combo.hpp"
 
 int main() {
     // config
@@ -22,7 +23,24 @@ int main() {
     gameIo.setAllPlayerName(s);
 
     while(!s.isFinish()) {
-        gameIo.getCommand(s);
+        if (s.getRound() == 2) {
+            // shuffle ability cards
+        }
+        for (int i = 0; i < 7; ++i) {
+            gameIo.getCommand(s);
+        }
+        std::vector<Combination> combinations;
+        for (int i = 0; i< 7; ++i) {
+            Combination a(s.getPlayerById(i).getInventory().getDeck());
+            combinations.push_back(a);
+        }
+        Combination maxC = Util::max<Combination>(combinations);
+        Player p;
+        for (int i = 0; i< 7; ++i) {
+            if (maxC == combinations.at(i)) {
+                s.getPlayerById(i).setPoint(s.getPlayerById(i)+s.getPoint());
+            }
+        }
     }
 
 }

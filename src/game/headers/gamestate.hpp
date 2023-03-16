@@ -28,6 +28,8 @@ class GameState {
         std::vector<Player*>::iterator currentStart;
         std::vector<Player*>::iterator currentEnd;
 
+        std::vector<AbilityCard> abilityCards;
+
         DeckCard* deck;
 
         TableCards* tableCards;

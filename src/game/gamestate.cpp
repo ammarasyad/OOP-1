@@ -1,5 +1,6 @@
 #include "gamestate.hpp"
 #include "generalexceptions.hpp"
+#include "ability.hpp"
 #include <bits/stdc++.h>
 #include <cmath>
 
@@ -13,6 +14,15 @@ GameState::GameState(std::vector<Player>& player_list)
     }
 
     creationCount += 1;
+
+    abilityCards.push_back(AbilityCard(*(new ReRoll(*this))));
+    abilityCards.push_back(AbilityCard(*(new Double(*this))));
+    abilityCards.push_back(AbilityCard(*(new Quadruple(*this))));
+    abilityCards.push_back(AbilityCard(*(new Half(*this))));
+    abilityCards.push_back(AbilityCard(*(new Quarter(*this))));
+    abilityCards.push_back(AbilityCard(*(new Reverse(*this))));
+    abilityCards.push_back(AbilityCard(*(new SwapCard(*this))));
+    abilityCards.push_back(AbilityCard(*(new Abilityless(*this))));
 }
 
 GameState::GameState(std::vector<Player>& player_list, DeckInventory& deck_)
@@ -73,18 +83,16 @@ void GameState::reverseQueue() {
 
 Player& GameState::nextTurn() {
     if (currentStart == currentEnd) {
-        throw GameStateException((char*)"last player had taken the turn");
+        throw GameStateException("last player had taken the turn");
     }
     if (round >= 7) {
-        throw GameStateException((char*)"Exceeded round limit");
+        throw GameStateException("Exceeded round limit");
     }
-
-    Player *next_player = *(currentStart + 1);
-    ++currentStart;
+    Player *next_player = *(currentStart++);
     // round ended
     if (currentStart == currentEnd) {
-        addTableCard();
         endRound();
+        addTableCard();
     }
     return *next_player;
 }
