@@ -9,6 +9,8 @@
 // TODO: dummy class, please change later
 class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
     private:
+        std::string name_;
+
         static int PLAYER_AMOUNT;
         const int playerId_;
         int point_;
@@ -20,7 +22,10 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
 
     public:
         Player();
+        explicit Player(std::string name);
         explicit Player(PlayerInventory deck);
+        explicit Player(PlayerInventory deck, std::string name);
+
 //-----------------------------------------------
         PlayerInventory getInventory() const;
         void setInventory(PlayerInventory);
@@ -49,6 +54,9 @@ class Player : public InventoryHolder<PlayerInventory,PlayerCard> {
 
         void setAbilityLess();
         bool isAbilityLess();
+
+        void setName(std::string);
+        std::string getName() const;
 
         //operator
         bool operator<(const Player&) const;

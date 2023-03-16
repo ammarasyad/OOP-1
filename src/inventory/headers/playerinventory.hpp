@@ -10,6 +10,7 @@ private:
     bool abilityAvailable;
 public:
     PlayerInventory();
+    PlayerInventory(const PlayerInventory& other);
     ~PlayerInventory();
 
     bool isAbilityAvailable() const;
@@ -18,10 +19,12 @@ public:
     void setAbilityCard(AbilityCard&);
     void setAbilityUsed();
 
-    PlayerInventory& operator+(PlayerCard& card) override;
-    friend PlayerInventory& operator+(PlayerCard&, PlayerInventory&);
-    PlayerInventory& operator-(PlayerCard& card) override;
-    friend PlayerInventory& operator-(PlayerCard&, PlayerInventory&);
+    PlayerInventory& operator+=(PlayerCard& card) override;
+    PlayerInventory operator+(PlayerCard& card) const;
+    friend PlayerInventory operator+(PlayerCard&, PlayerInventory&);
+    PlayerInventory& operator-=(PlayerCard& card) override;
+    PlayerInventory operator-(PlayerCard& card) const;
+    friend PlayerInventory operator-(PlayerCard&, PlayerInventory&);
 
     PlayerInventory& operator=(PlayerInventory&);
 

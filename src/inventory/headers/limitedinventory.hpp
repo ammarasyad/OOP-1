@@ -19,11 +19,15 @@ public:
     void addToDeck(T&);
     void removeFromDeck(T&);
 
-    virtual LimitedInventory<T>& operator+(T& card);
-    virtual LimitedInventory<T>& operator-(T& card);
+    LimitedInventory<T> operator+(T& card) const;
+    LimitedInventory<T> operator-(T& card) const;
+
+    virtual LimitedInventory<T>& operator+=(T& card);
+    virtual LimitedInventory<T>& operator-=(T& card);
 
     template<class U>
     friend LimitedInventory<U>& operator+(U&, LimitedInventory<U>&);
+
 };
 
 template<class T>
@@ -68,20 +72,34 @@ void LimitedInventory<T>::removeFromDeck(T &card) {
 }
 
 template <class T>
-LimitedInventory<T> &LimitedInventory<T>::operator+(T &card) {
+LimitedInventory<T> &LimitedInventory<T>::operator+=(T &card) {
     addToDeck(card);
     return *this;
 }
 
 template <class T>
-LimitedInventory<T> &operator+(T &card, LimitedInventory<T> &inventory) {
+LimitedInventory<T> LimitedInventory<T>::operator+(T &card) const {
+    LimitedInventory<T> temp = *this;
+    temp.addToDeck(card);
+    return temp;
+}
+
+template <class T>
+LimitedInventory<T> operator+(T &card, LimitedInventory<T> inventory) {
     return inventory + card;
 }
 
 template <class T>
-LimitedInventory<T> &LimitedInventory<T>::operator-(T &card) {
+LimitedInventory<T> &LimitedInventory<T>::operator-=(T &card) {
     this->removeFromDeck(card);
     return *this;
+}
+
+template <class T>
+LimitedInventory<T> LimitedInventory<T>::operator-(T &card) const {
+    LimitedInventory<T> temp = *this;
+    temp.removeFromDeck(card);
+    return temp;
 }
 
 #endif //IF2210_PEMROGRAMAN_BERORIENTASI_OBJEK_LIMITEDINVENTORY_HPP

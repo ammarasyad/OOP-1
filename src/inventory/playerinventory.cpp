@@ -18,12 +18,23 @@ PlayerInventory::PlayerInventory(): LimitedInventory(15), abilityAvailable(false
 
 }
 
+PlayerInventory::PlayerInventory(const PlayerInventory& other) : PlayerInventory() {
+    abilityAvailable = other.abilityAvailable;
+    deck = other.deck;
+    deckSize = other.deckSize;
+    if(abilityAvailable){
+        abilityCard = new AbilityCard(*(other.abilityCard));
+    } else {
+        abilityCard = nullptr;
+    }
+}
+
 PlayerInventory::~PlayerInventory(){
     delete abilityCard;
 }
 
 void PlayerInventory::resetPlayer() {
-    deck.clear();
+    clear();
     abilityAvailable = false;
     delete abilityCard;
     abilityCard = nullptr;
@@ -44,19 +55,31 @@ bool PlayerInventory::checkAbilityMatchAndUse(AbilityCard &card) {
     return false;
 }
 
-PlayerInventory &PlayerInventory::operator+(PlayerCard &card) {
-    return dynamic_cast<PlayerInventory &>(LimitedInventory::operator+(card));
+PlayerInventory &PlayerInventory::operator+=(PlayerCard &card) {
+    LimitedInventory::operator+=(card);
+    return *this;
 }
 
-PlayerInventory &PlayerInventory::operator-(PlayerCard &card) {
-    return dynamic_cast<PlayerInventory &>(LimitedInventory::operator-(card));
+PlayerInventory PlayerInventory::operator+(PlayerCard &card) const {
+    PlayerInventory temp(*this);
+    return temp += card;
 }
 
-PlayerInventory &operator+(PlayerCard &card, PlayerInventory &inventory) {
+PlayerInventory &PlayerInventory::operator-=(PlayerCard &card) {
+    LimitedInventory::operator-=(card);
+    return *this;
+}
+
+PlayerInventory PlayerInventory::operator-(PlayerCard &card) const {
+    PlayerInventory temp(*this);
+    return temp -= card;
+}
+
+PlayerInventory operator+(PlayerCard &card, PlayerInventory &inventory) {
     return inventory + card;
 }
 
-PlayerInventory &operator-(PlayerCard &card, PlayerInventory &inventory) {
+PlayerInventory operator-(PlayerCard &card, PlayerInventory &inventory) {
     return inventory - card;
 }
 

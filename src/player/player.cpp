@@ -7,10 +7,19 @@ Player::Player() : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(f
     PLAYER_AMOUNT++;
 }
 
+Player::Player(std::string name) : Player() {
+    name_ = name;
+}
+
 Player::Player(PlayerInventory inventory) : playerId_(PLAYER_AMOUNT), usedCommand_(false), abilityLess_(false), handScore_(-1), point_(0) {
     inventory_ = inventory;
     PLAYER_AMOUNT++;
     //for loop find highest color
+}
+
+Player::Player(PlayerInventory inventory, std::string name) : Player(inventory) {
+    name_ = name;
+
 }
 
 //virtual func implementation
@@ -88,6 +97,14 @@ void Player::setPoint(int point){
 
 void Player::addPoint(int amount){
     point_ += amount;
+}
+
+void Player::setName(std::string name){
+    name_ = name;
+}
+
+std::string Player::getName() const {
+    return name_;
 }
 
 //operator

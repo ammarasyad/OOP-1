@@ -20,6 +20,8 @@ class Inventory {
         int getDeckSize() const;
         std::vector<T> &getDeck();
 
+        void clear();
+
         /*
          * this function switch elements between vector v1 and v2 with index indices[i][0] (v1) and index
          * indices[i][1] (v2)
@@ -60,6 +62,13 @@ template<class T>
 std::vector<T> &Inventory<T>::getDeck() {
     return deck;
 }
+
+template <class T>
+void Inventory<T>::clear(){
+    deck.clear();
+    deckSize = 0;
+}
+
 #include <iostream>
 
 template<class T>

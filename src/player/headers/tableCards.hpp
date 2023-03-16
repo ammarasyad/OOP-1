@@ -1,16 +1,16 @@
+#ifndef TABLE_CARDS_HPP
+#define TABLE_CARDS_HPP
+
 #include "limitedinventory.hpp"
 #include "cards.hpp"
-
-//temp
-class Deck {
-    public:
-        void show();
-};
 
 
 class TableCards : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCard>{
     private:
     public:
+        TableCards();
+        TableCards(LimitedInventory<PlayerCard>);
+
         LimitedInventory<PlayerCard> getInventory();
         void setInventory(LimitedInventory<PlayerCard>);
 
@@ -18,4 +18,8 @@ class TableCards : public InventoryHolder<LimitedInventory<PlayerCard>, PlayerCa
         void removeItem(PlayerCard);
         
         PlayerCard getItemAt(int);
+
+        void reset();
 };
+
+#endif

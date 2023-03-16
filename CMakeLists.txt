@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.24)
 project(IF2210_Pemrograman_Berorientasi_Objek)
 
 set(CMAKE_CXX_STANDARD 14)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mrdrnd")
-#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mrdrnd")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++ -static")
 
 include_directories(src/ability)
 include_directories(src/ability/headers)
