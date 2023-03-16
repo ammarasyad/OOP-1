@@ -5,7 +5,16 @@
 int GameState::creationCount;
 
 GameState::GameState(std::vector<Player>& player_list)
-        : playerList(player_list), gamePoint(0), round(0) {
+        : playerList(player_list), gamePoint(0), round(0), deck() {
+    if (creationCount > 0) {
+        std::cout << "WARNING: This is not the first request of GameState creation. Please revisit the code if"
+            << " this code is not for testing" << std::endl;
+    }
+    creationCount += 1;
+}
+
+GameState::GameState(std::vector<Player>& player_list, DeckInventory& deck_)
+        : playerList(player_list), gamePoint(0), round(0), deck(deck_) {
     if (creationCount > 0) {
         std::cout << "WARNING: This is not the first request of GameState creation. Please revisit the code if"
             << " this code is not for testing" << std::endl;
@@ -143,6 +152,10 @@ std::vector<int> GameState::getNextTurnIds() {
     }
     nextids.push_back((**queue.begin()).getPlayerId());
     return nextids;
+}
+
+DeckCard& GameState::getDeck() {
+    return deck;
 }
 
 

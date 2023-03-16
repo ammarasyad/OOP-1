@@ -30,6 +30,7 @@ class GameState {
 
     public:
         GameState(std::vector<Player>&);
+        GameState(std::vector<Player>&, DeckInventory);
 
         long long int getPoint() const;
         int getRound() const;
