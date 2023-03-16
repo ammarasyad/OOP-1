@@ -2,6 +2,11 @@
 #include <utility>
 #include <iostream>
 
+void GameIO::startGame(GameState &gameState) {
+    std::cout << "selamat di game kontolity" << std::endl;
+    getCommand(gameState);
+}
+
 void GameIO::getCommand(GameState& game_state) {
     std::cout << "Masukkan command anda: ";
     std::string command;

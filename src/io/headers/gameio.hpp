@@ -8,6 +8,8 @@
 
 class GameIO {
     public:
+        void startGame(GameState &gameState);
+
         void getCommand(GameState& game_state);
 
         void nextIO(GameState& game_state);
